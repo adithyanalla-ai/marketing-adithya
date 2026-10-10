@@ -1,0 +1,56 @@
+name: Weekly trend drafts
+
+on:
+  schedule:
+    - cron: "30 3 * * 1" # Mondays 03:30 UTC (09:00 IST)
+  workflow_dispatch:
+    inputs:
+      drafts:
+        description: "Number of drafts to create"
+        default: "3"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  drafts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run trend pipeline
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
+          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npm run trends -- --drafts=${{ github.event.inputs.drafts || '3' }}
+      - name: Open pull request for review
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: trends/weekly-drafts
+          delete-branch: true
+          add-paths: |
+            content/blog/*.mdx
+            scripts/trends/output/*
+          commit-message: "content: weekly trend-driven blog drafts (draft: true)"
+          title: "Weekly blog drafts for review"
+          labels: content, needs-review
+          body: |
+            Automated drafts from the weekly Google Trends pipeline.
+
+            **Nothing here is published.** Every post has `draft: true`.
+
+            Before merging each draft you want to publish:
+            - [ ] Fill in the "From my experience" section with real first-hand detail
+            - [ ] Check every claim and number against its cited source
+            - [ ] Confirm word count (700-1,000 trend posts, 1,200-2,000 pillar posts)
+            - [ ] Set `draft: false` and update `updated`
+
+            Delete any draft you do not want. See `scripts/trends/output/REVIEW.md` for per-draft flags.
