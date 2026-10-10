@@ -10,7 +10,9 @@
     "trends": "tsx scripts/trends/run.ts",
     "trends:dry": "tsx scripts/trends/run.ts --dry-run",
     "indexnow": "tsx scripts/indexnow.ts",
-    "validate:seo": "tsx scripts/validate-seo.ts"
+    "validate:seo": "tsx scripts/validate-seo.ts",
+    "check:cases": "tsx scripts/check-case-studies.ts",
+    "prebuild": "tsx scripts/check-case-studies.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",

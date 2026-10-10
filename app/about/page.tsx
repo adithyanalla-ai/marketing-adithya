@@ -2,6 +2,8 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { ABOUT, MORE_STATS, STATS } from "@/content/site";
+import { CASE_STUDIES } from "@/content/case-studies";
+import { view } from "@/lib/case-study";
 import { JsonLd } from "@/components/JsonLd";
 import { personLd } from "@/lib/jsonld";
 import { PageHero } from "@/components/ui/PageHero";
@@ -47,7 +49,8 @@ function HeroMedia() {
 }
 
 export default function About() {
-  const { education, credentials, research, languages, experience } = ABOUT;
+  const { education, credentials, research, languages } = ABOUT;
+  const experience = CASE_STUDIES.filter((c) => c.kind === "employer").map(view).sort((a, b) => (a.period < b.period ? 1 : -1));
   return (
     <>
       <JsonLd data={personLd()} />
@@ -82,10 +85,10 @@ export default function About() {
             <div className="flex items-center gap-3"><IconChip name="briefcase" size="sm" /><h3 className="text-lg">Experience</h3></div>
             <ol className="mt-5 space-y-5 border-l-2 border-[#D6E3FF] pl-6">
               {experience.map((e) => (
-                <li key={e.org} className="relative">
+                <li key={e.slug} className="relative">
                   <span aria-hidden="true" className="absolute -left-[31px] top-1.5 size-3 rounded-full border-2 border-brand bg-white" />
-                  <p className="font-display text-base font-extrabold">{e.org}</p>
-                  {(e.role || e.period) && <p className="text-sm text-slate">{[e.role, e.period].filter(Boolean).join(" · ")}</p>}
+                  <p className="font-display text-base font-extrabold">{e.role}</p>
+                  <p className="text-sm text-slate"><span className="capitalize-first inline-block">{e.name}</span>{e.period ? ` · ${e.period}` : ""}</p>
                 </li>
               ))}
             </ol>

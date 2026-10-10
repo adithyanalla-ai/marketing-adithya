@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SERVICES, getService } from "@/content/services";
-import { getCase } from "@/content/case-studies";
+import { casePath, casesForService, view } from "@/lib/case-study";
 import { buildMetadata } from "@/lib/seo";
 import { postsForTags } from "@/lib/blog";
 import { JsonLd } from "@/components/JsonLd";
@@ -32,7 +32,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   if (!s) notFound();
   const posts = postsForTags(s.relatedTags, 3);
   const related = s.relatedServices.map((r) => getService(r)!).filter(Boolean);
-  const caseStudy = s.caseSlug ? getCase(s.caseSlug) : undefined;
+  const caseStudy = casesForService(s.slug)[0];
+  const cv = caseStudy ? view(caseStudy) : undefined;
   const post = s.postSlug ? posts.find((p) => p.slug === s.postSlug) : undefined;
 
   const serviceLd = {
@@ -100,8 +101,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           {(caseStudy || post) && (
             <div className="card flex flex-col justify-between p-6">
               <p className="text-[15px] text-slate">{caseStudy ? "Read the case study behind this result." : "Read how this works in practice."}</p>
-              <Link href={caseStudy ? `/case-studies/${caseStudy.slug}/` : `/blog/${post!.slug}/`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:underline">
-                {caseStudy ? caseStudy.name : post!.title} <ArrowRightIcon width={16} height={16} />
+              <Link href={caseStudy ? casePath(caseStudy) : `/blog/${post!.slug}/`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:underline">
+                {cv ? cv.title : post!.title} <ArrowRightIcon width={16} height={16} />
               </Link>
             </div>
           )}

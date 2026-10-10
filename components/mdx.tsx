@@ -36,4 +36,6 @@ export function BarChart({ data, unit = "", caption }: { data: { label: string; 
   );
 }
 
-export const mdxComponents = { Callout, KeyTakeaways, BarChart };
+import { CaseFacts, CaseName } from "./CaseFacts";
+
+export const mdxComponents = { Callout, KeyTakeaways, BarChart, CaseFacts, CaseName };

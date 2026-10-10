@@ -1,0 +1,75 @@
+---
+title: "Automating Client Reports with LLMs: From 3 Days to 4 Hours"
+description: "How to automate client marketing reports with LLM pipelines: pull the data, draft commentary from it, verify every figure and keep a person in charge."
+slug: "automating-client-reports-with-llms"
+date: "2026-10-10"
+updated: "2026-10-10"
+category: "AI Automation"
+tags: ["llm automation", "langchain", "claude api", "reporting"]
+primaryKeyword: "automate client reports with llm"
+secondaryKeywords: ["llm report automation", "langchain reporting", "claude api marketing reports"]
+sources: []
+author: "Adithya Reddy"
+draft: true
+caseStudy: "eject-solutions"
+supersedes: "llm-automation-client-reports"
+trendSource: "manual"
+trendScore: 0
+---
+
+<KeyTakeaways>
+
+- Automate data pulls, tables and first-draft commentary; keep review and recommendations human.
+- Give the model the numbers; never ask it to recall them.
+- Check every figure in the text against the source before sending.
+
+</KeyTakeaways>
+
+Reporting is repetitive, and repetitive work is where LLM pipelines help most. This is the workflow I use, with the safeguards that make it trustworthy. For a build for your team, see [LLM reporting automation](/services/llm-reporting-automation/).
+
+## The workflow
+
+### 1. Fix the template
+List the sections each client reads and the numbers behind each. A stable template is what makes automation possible.
+
+### 2. Pull the data
+Collect metrics into one table or model, for example with SQL and [Power BI](/services/marketing-analytics-power-bi/).
+
+### 3. Draft the commentary
+Use an LLM pipeline (LangChain or the Claude API) to turn the table into plain-language commentary: what moved, by how much, what stood out. Pass the exact figures and instruct the model to use only those.
+
+### 4. Verify
+Compare every figure in the draft with the source, by script and by eye. Fluent text can still be wrong.
+
+### 5. Review and send
+A person adds recommendations and context, approves the report and schedules delivery.
+
+## Pitfalls
+
+- Letting the model recall numbers
+- Skipping the review step
+- Changing the template every month
+
+## From my experience
+
+<CaseFacts id="eject-solutions" />
+
+[ADD DETAIL]: the stack you used, what the verification step caught, how clients reacted and what you would do differently.
+
+## FAQ
+
+### Can an LLM write accurate marketing reports?
+
+It can draft commentary from the data you supply, but figures must be checked against the source.
+
+### Which tools do you use?
+
+LangChain and the Claude API for the language-model step, with SQL and Power BI for the data.
+
+### Should clients know reports are automated?
+
+Being open about it builds trust. What matters is that a person reviews the final report.
+
+### What should stay manual?
+
+Strategic recommendations and anything that needs context only you have.

@@ -51,8 +51,6 @@ export const ABOUT = {
     { icon: "barchart", title: "Data-Driven Execution", text: "Use analytics and A/B testing to make better marketing decisions." },
     { icon: "gear", title: "Automation for Scale", text: "Leverage AI and automation to save time and improve results." },
   ],
-  /** Role titles and dates are intentionally absent until Adithya supplies them. */
-  experience: [{ org: "Eject Solutions" }, { org: "INT360 Design Studio" }] as { org: string; role?: string; period?: string; note?: string }[],
   education: { degree: "B.Tech, Data Science", school: "KL University", grade: "8.1 CGPA" },
   credentials: [{ title: "Python for Data Science", issuer: "HackerRank", note: "Verified certificate" }],
   /** Titles and links to be added by Adithya. */

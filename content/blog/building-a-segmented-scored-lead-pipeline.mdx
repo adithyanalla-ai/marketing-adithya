@@ -1,0 +1,79 @@
+---
+title: "How a Segmented and Scored Lead Pipeline Works"
+description: "A step-by-step process for building a lead pipeline that cleans, deduplicates, segments and scores prospects before sales sees them."
+slug: "building-a-segmented-scored-lead-pipeline"
+date: "2026-10-10"
+updated: "2026-10-10"
+category: "Lead Generation"
+tags: ["lead generation", "lead scoring", "ai marketing"]
+primaryKeyword: "build a lead scoring pipeline"
+secondaryKeywords: ["lead data cleaning", "deduplicate leads", "segmented leads"]
+sources: []
+author: "Adithya Reddy"
+draft: true
+caseStudy: "eject-solutions"
+supersedes: "segmented-scored-lead-pipeline"
+trendSource: "manual"
+trendScore: 0
+---
+
+<KeyTakeaways>
+
+- Clean and deduplicate prospect data before you score it, or the scores will be wrong.
+- Segment first (who they are), then score (how ready they are).
+- Keep the model small, write it down and review it against real outcomes.
+
+</KeyTakeaways>
+
+A scoring model is only as good as the data under it. The most common failure I see is scoring messy lists: duplicates, missing fields and inconsistent company names. This guide walks through the pipeline in the order I build it. For help setting one up, see [AI lead generation](/services/ai-lead-generation/).
+
+## The pipeline, step by step
+
+### 1. Extract
+Pull prospects from every source (forms, ad platforms, scraped or purchased lists, CRM exports) into one place. Record the source on every row, because source quality is one of your best scoring signals later.
+
+### 2. Clean
+Standardise the fields you will score on: email, company, role, location, sector. In Python (Pandas) or SQL this is mostly trimming, lower-casing, validating email format and mapping free-text values to a short list.
+
+### 3. Deduplicate
+Match on email first, then on company plus name. Decide up front which record wins (most recent, most complete) and keep a log of what was merged, so a person can undo a bad merge.
+
+### 4. Segment
+Group prospects by what they are: sector, size, role, location. Three to five segments are enough. Segments decide the message and the owner.
+
+### 5. Score
+Split the score into fit (does this prospect match who you serve?) and intent (have they shown interest?). Keep five to eight rules, and write each rule in plain language so sales can challenge it. Any point values you start with are guesses until you compare them with outcomes.
+
+### 6. Route
+Turn score bands into actions: hot leads to a person the same day, warm leads into an automated follow-up with a personal touch, cold leads into nurture.
+
+### 7. Review
+Each month, compare score bands with what actually converted and adjust the rules. This step is what turns a scoring sheet into a model.
+
+## From my experience
+
+<CaseFacts id="eject-solutions" />
+
+[ADD DETAIL]: what you segmented on, which cleaning or dedupe problems were worst, which scoring signals mattered most, and what you changed after reviewing outcomes.
+
+## Related reading
+
+See how [structured Meta A/B testing](/blog/structured-meta-ab-testing-cut-cost-per-lead/) feeds the top of the funnel and how [LLM reporting](/blog/automating-client-reports-with-llms/) keeps the pipeline visible.
+
+## FAQ
+
+### Why deduplicate before scoring?
+
+Duplicates inflate engagement and split a single prospect's history across records, so scores become unreliable and sales may contact the same person twice.
+
+### How many segments should I have?
+
+Three to five. More than that and nobody remembers them.
+
+### Should the score be a single number?
+
+Keep fit and intent as two separate numbers, then combine them into bands. You can then see why a lead ranked high.
+
+### How often should I review the model?
+
+Monthly is a sensible start. Compare each band with real conversions and adjust.

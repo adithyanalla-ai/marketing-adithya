@@ -72,3 +72,5 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .swoosh path { animation: none; stroke-dashoffset: 0; }
   .btn, .card { transition: none; }
 }
+
+.capitalize-first::first-letter { text-transform: uppercase; }

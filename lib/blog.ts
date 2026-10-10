@@ -22,6 +22,10 @@ export type PostMeta = {
   draft: boolean;
   trendSource?: string;
   trendScore?: number;
+  /** id of the case study this post is based on (content/case-studies) */
+  caseStudy?: string;
+  /** slug of an older published post this one should replace when published */
+  supersedes?: string;
   readingMinutes: number;
 };
 
@@ -57,6 +61,8 @@ function parseFile(file: string): Post {
     draft: data.draft !== false,
     trendSource: data.trendSource ? String(data.trendSource) : undefined,
     trendScore: typeof data.trendScore === "number" ? data.trendScore : undefined,
+    caseStudy: data.caseStudy ? String(data.caseStudy) : undefined,
+    supersedes: data.supersedes ? String(data.supersedes) : undefined,
     readingMinutes: Math.max(1, Math.ceil(readingTime(content).minutes)),
     content,
   };

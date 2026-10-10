@@ -23,7 +23,6 @@ export type Service = {
   how: { icon: IconName; title: string; text: string }[];
   /** Real figures only (from content/site.ts STATS). */
   stats: StatRow[];
-  caseSlug?: string;
   postSlug?: string;
   tools: string[];
   faqs: Faq[];
@@ -134,7 +133,6 @@ export const SERVICES: Service[] = [
       { icon: "users", title: "Follow up", text: "Route enquiries to counsellors with timely reminders, then report by programme." },
     ],
     stats: [{ icon: "graduation", value: "350+", label: "Students admitted" }],
-    caseSlug: "pp-savani-university-admissions",
     tools: ["Meta Ads", "Excel", "Power BI"],
     faqs: [
       { q: "When should admission campaigns start?", a: "Well before application deadlines, so there is time to test and improve. Exact timing depends on your intake calendar." },
@@ -168,7 +166,6 @@ export const SERVICES: Service[] = [
       { icon: "barchart", title: "Capture and report", text: "Collect supporter details with consent and report what is working." },
     ],
     stats: [{ icon: "bank", value: "29/29", label: "Seats won" }],
-    caseSlug: "police-officers-association-election-campaign",
     tools: ["Meta Ads", "Excel", "Power BI"],
     faqs: [
       { q: "Do you follow election rules?", a: "Campaign work must comply with Election Commission of India guidelines and platform political-ad policies. Compliance is part of planning." },

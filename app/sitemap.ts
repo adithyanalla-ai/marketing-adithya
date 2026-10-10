@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getCategories, getPosts, getTags, postsInCategory, postsWithTag, PAGE_SIZE } from "@/lib/blog";
 import { SERVICES } from "@/content/services";
 import { CASE_STUDIES } from "@/content/case-studies";
+import { casePath } from "@/lib/case-study";
 import { canonical } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: canonical("/about/") },
     { url: canonical("/services/"), priority: 0.9 },
     { url: canonical("/case-studies/") },
-    ...CASE_STUDIES.filter((c) => c.ready).map((c) => ({ url: canonical(`/case-studies/${c.slug}/`) })),
+    ...CASE_STUDIES.filter((c) => c.confirmed).map((c) => ({ url: canonical(casePath(c)) })),
     { url: canonical("/resources/") },
     { url: canonical("/resources/lead-cost-calculator/") },
     { url: canonical("/contact/") },
