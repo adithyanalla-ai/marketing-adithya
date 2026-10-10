@@ -8,8 +8,6 @@ import { HeroDashboardLazy } from "./HeroDashboardLazy";
 export function Hero() {
   return (
     <section className="relative overflow-hidden" aria-labelledby="hero-h1">
-      <div className="dot-grid pointer-events-none absolute -left-10 top-24 hidden h-52 w-52 opacity-60 [mask-image:radial-gradient(circle,#000,transparent_70%)] md:block" aria-hidden="true" />
-      <div className="dot-grid pointer-events-none absolute -right-10 bottom-10 hidden h-60 w-60 opacity-60 [mask-image:radial-gradient(circle,#000,transparent_70%)] md:block" aria-hidden="true" />
 
       <div className="container-x relative grid items-center gap-12 pb-16 pt-8 md:pt-14 lg:grid-cols-[minmax(0,11fr)_minmax(0,12fr)] lg:gap-8 lg:pb-16">
         <div>

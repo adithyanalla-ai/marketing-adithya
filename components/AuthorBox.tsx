@@ -3,7 +3,7 @@ import { SITE } from "@/lib/site";
 
 export function AuthorBox() {
   return (
-    <aside aria-label="About the author" className="rounded-2xl border border-line bg-white p-6">
+    <aside aria-label="About the author" className="card p-6">
       <h2 className="text-lg font-semibold">Written by {SITE.name}</h2>
       <p className="mt-2 text-muted">
         I am a growth and performance marketer in Hyderabad, India. I work on lead generation, Meta ads,

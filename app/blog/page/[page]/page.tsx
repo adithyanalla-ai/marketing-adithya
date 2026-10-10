@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { getPosts, PAGE_SIZE } from "@/lib/blog";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/ui/PageHero";
+import { CTABand } from "@/components/sections/CTABand";
 import { BlogListing } from "@/components/BlogListing";
 
 export const dynamicParams = false;
@@ -26,10 +27,10 @@ export default async function BlogPage({ params }: { params: Promise<{ page: str
   const posts = getPosts();
   if (!Number.isInteger(n) || n < 2 || n > Math.ceil(posts.length / PAGE_SIZE)) notFound();
   return (
-    <div className="mx-auto max-w-[1200px] px-6 py-12">
-      <Breadcrumbs items={[{ name: "Blog", path: "/blog/" }, { name: `Page ${n}`, path: `/blog/page/${n}/` }]} />
-      <h1 className="mt-6 text-4xl font-semibold">Marketing blog, page {n}</h1>
-      <div className="mt-8"><BlogListing posts={posts} page={n} base="/blog" /></div>
-    </div>
+    <>
+      <PageHero crumbs={[{ name: "Blog", path: "/blog/" }, { name: `Page ${n}`, path: `/blog/page/${n}/` }]} eyebrow="Insights" title={`Marketing blog, page ${n}`} pills={null} intro="More articles on lead generation, Meta ads, analytics and LLM automation." />
+      <div className="container-x pb-12"><BlogListing posts={posts} page={n} base="/blog" /></div>
+      <CTABand />
+    </>
   );
 }

@@ -32,11 +32,13 @@ npm run typecheck
 | `DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD` | Trend pipeline, alternative provider | one provider needed |
 | `TRENDS_PROVIDER` | `serpapi`, `dataforseo` or `pytrends` (auto-detected from keys if unset) | optional |
 | `ANTHROPIC_API_KEY` | Brief + draft generation | for drafting |
+| `NEXT_PUBLIC_WHATSAPP_URL` | WhatsApp link on /contact/ | optional |
+| `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Delivers /contact/ form messages (form returns 503 until set) | recommended |
 | `ANTHROPIC_MODEL` | Override model (default `claude-opus-5-5`) | optional |
 
 ## Routes
 
-`/`, `/about/`, `/work/`, `/contact/`, `/services/<slug>/` (six service pages), `/blog/`, `/blog/page/<n>/`,
+`/`, `/about/`, `/services/`, `/services/<slug>/` (six landing pages), `/case-studies/`, `/case-studies/<slug>/`, `/resources/`, `/resources/lead-cost-calculator/`, `/contact/`, `/blog/`, `/blog/page/<n>/`,
 `/blog/<slug>/`, `/blog/category/<category>/`, `/blog/tag/<tag>/`, plus `/sitemap.xml`, `/robots.txt`,
 `/rss.xml`, `/llms.txt`, `/og/?title=...` (dynamic Open Graph image) and a branded 404.
 All URLs use a trailing slash; non-slash URLs 308-redirect.
@@ -143,3 +145,10 @@ Also paste live URLs into the [Rich Results Test](https://search.google.com/test
 - LinkedIn URL, contact email, booking link
 - The "From my experience" detail in each post
 - Review/AggregateRating schema is intentionally absent until real testimonials exist
+
+## Design system
+
+Tokens live in `app/globals.css`; reusable pieces are in `components/ui/` (SectionHeader, PageHero, FeatureCard,
+CompactCard, StatCard, Annotation, Pill, Deco) and `components/sections/` (CTABand, ToolsStrip, FaqSection,
+ProcessSteps, ServicesGrid, StatsStrip). All copy and figures come from `content/` (`site.ts`, `services.ts`,
+`case-studies.ts`). Case studies with `ready: false` are `noindex` and left out of the sitemap until completed.

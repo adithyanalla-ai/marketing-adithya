@@ -29,3 +29,38 @@ export const HERO = {
     "Lead generation, performance marketing, analytics and LLM automation that drive real revenue. Based in Hyderabad, working with clients across India.",
   trust: ["Data-driven strategy", "Results-focused execution", "Transparent reporting"],
 };
+
+export const MORE_STATS = {
+  hoursSaved: { value: "20+", label: "hours saved per week" },
+  kpis: { value: "15+", label: "KPIs tracked" },
+  abTests: { value: "15+", label: "A/B tests across 10+ clients" },
+  reportDelivery: { value: "3 days → 4 hours", label: "Client report delivery with LLM automation" },
+} as const;
+
+export const ABOUT = {
+  eyebrow: "Growth marketer & AI automation consultant",
+  bio:
+    "I am a growth and performance marketer based in Hyderabad, Telangana. I work across lead generation, Meta ads, marketing analytics in Power BI, and LLM automation with LangChain and the Claude API.",
+  areas: [
+    { icon: "users", title: "Segmented and scored lead pipelines", text: "I build segmented and scored lead pipelines that help route the right enquiries to sales faster and improve conversion rates." },
+    { icon: "barchart", title: "Meta ads A/B testing", text: "I run and optimise Meta ads with structured A/B testing, which has reduced cost per lead by 20% for clients." },
+    { icon: "doc", title: "LLM-based reporting automation", text: "I automate client marketing reports using LLMs, which has cut report delivery time from 3 days to 4 hours." },
+  ],
+  approach: [
+    { icon: "target", title: "Strategy First", text: "Understand your goals, audience and growth opportunities." },
+    { icon: "barchart", title: "Data-Driven Execution", text: "Use analytics and A/B testing to make better marketing decisions." },
+    { icon: "gear", title: "Automation for Scale", text: "Leverage AI and automation to save time and improve results." },
+  ],
+  /** Role titles and dates are intentionally absent until Adithya supplies them. */
+  experience: [{ org: "Eject Solutions" }, { org: "INT360 Design Studio" }] as { org: string; role?: string; period?: string; note?: string }[],
+  education: { degree: "B.Tech, Data Science", school: "KL University", grade: "8.1 CGPA" },
+  credentials: [{ title: "Python for Data Science", issuer: "HackerRank", note: "Verified certificate" }],
+  /** Titles and links to be added by Adithya. */
+  research: [
+    { title: "Peer-reviewed machine learning paper", venue: "Peer-reviewed" },
+    { title: "Two SSRN papers", venue: "SSRN" },
+  ],
+  languages: ["English", "Telugu", "Hindi"],
+};
+export * from "./services";
+export * from "./case-studies";

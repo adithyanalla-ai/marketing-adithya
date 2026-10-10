@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCategories, getPosts, getTags, postsInCategory, postsWithTag, PAGE_SIZE } from "@/lib/blog";
-import { SERVICES } from "@/lib/services";
+import { SERVICES } from "@/content/services";
+import { CASE_STUDIES } from "@/content/case-studies";
 import { canonical } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,7 +13,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [
     { url: canonical("/"), lastModified: lm(newest(posts)), changeFrequency: "weekly", priority: 1 },
     { url: canonical("/about/") },
-    { url: canonical("/work/") },
+    { url: canonical("/services/"), priority: 0.9 },
+    { url: canonical("/case-studies/") },
+    ...CASE_STUDIES.filter((c) => c.ready).map((c) => ({ url: canonical(`/case-studies/${c.slug}/`) })),
+    { url: canonical("/resources/") },
+    { url: canonical("/resources/lead-cost-calculator/") },
     { url: canonical("/contact/") },
     { url: canonical("/blog/"), lastModified: lm(newest(posts)), changeFrequency: "weekly", priority: 0.8 },
     ...SERVICES.map((s) => ({ url: canonical(`/services/${s.slug}/`), priority: 0.9 })),

@@ -4,7 +4,7 @@ import { SITE } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-line bg-white">
+    <footer className="mt-4 border-t border-line bg-white">
       <div className="mx-auto grid max-w-[1200px] gap-8 px-6 py-12 sm:grid-cols-3">
         <div>
           <p className="font-display text-lg font-semibold">{SITE.name}</p>
@@ -24,7 +24,8 @@ export function Footer() {
           <h2 className="text-sm font-semibold uppercase tracking-wide">Site</h2>
           <ul className="mt-3 space-y-2 text-sm">
             <li><Link className="hover:text-accent" href="/blog/">Blog</Link></li>
-            <li><Link className="hover:text-accent" href="/work/">Work</Link></li>
+            <li><Link className="hover:text-accent" href="/case-studies/">Case studies</Link></li>
+            <li><Link className="hover:text-accent" href="/resources/">Resources</Link></li>
             <li><Link className="hover:text-accent" href="/about/">About</Link></li>
             <li><Link className="hover:text-accent" href="/contact/">Contact</Link></li>
             <li><a className="hover:text-accent" href="/rss.xml">RSS feed</a></li>

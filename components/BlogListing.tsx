@@ -17,10 +17,10 @@ export function BlogListing({
       <BlogSearch items={index} />
       <nav aria-label="Categories" className="mt-6 flex flex-wrap gap-2">
         <Link href="/blog/" aria-current={!activeCategory ? "page" : undefined}
-          className={`rounded-full border px-6 py-1.5 text-sm ${!activeCategory ? "border-ink bg-ink text-white" : "border-line bg-white"}`}>All</Link>
+          className={`rounded-full border px-6 py-1.5 text-sm ${!activeCategory ? "border-brand bg-brand text-white" : "border-card-line bg-white"}`}>All</Link>
         {cats.map((c) => (
           <Link key={c.slug} href={`/blog/category/${c.slug}/`} aria-current={activeCategory === c.slug ? "page" : undefined}
-            className={`rounded-full border px-6 py-1.5 text-sm ${activeCategory === c.slug ? "border-ink bg-ink text-white" : "border-line bg-white"}`}>
+            className={`rounded-full border px-6 py-1.5 text-sm ${activeCategory === c.slug ? "border-brand bg-brand text-white" : "border-card-line bg-white"}`}>
             {c.name} ({c.count})
           </Link>
         ))}

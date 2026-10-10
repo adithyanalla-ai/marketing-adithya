@@ -7,16 +7,16 @@ import { BookCallButton } from "../BookCallButton";
 
 const LINKS = [
   { href: "/", label: "Home", match: (p: string) => p === "/" },
-  { href: "/#services", label: "Services", match: (p: string) => p.startsWith("/services") },
-  { href: "/work/", label: "Case Studies", match: (p: string) => p.startsWith("/work") },
+  { href: "/services/", label: "Services", match: (p: string) => p.startsWith("/services") },
+  { href: "/case-studies/", label: "Case Studies", match: (p: string) => p.startsWith("/case-studies") },
   { href: "/about/", label: "About", match: (p: string) => p.startsWith("/about") },
   { href: "/blog/", label: "Blog", match: (p: string) => p.startsWith("/blog") },
 ];
 
 const RESOURCES = [
-  { href: "/tools/lead-cost-calculator/", label: "Lead Cost Calculator" },
+  { href: "/resources/lead-cost-calculator/", label: "Lead Cost Calculator" },
   { href: "/blog/", label: "Blog" },
-  { href: "/#tools", label: "Tools I Use" },
+  { href: "/resources/#tools", label: "Tools I Use" },
 ];
 
 export function Navbar() {
@@ -74,7 +74,7 @@ export function Navbar() {
             );
           })}
           <div className="relative" ref={ddRef}>
-            <button type="button" className={`${link(false)} flex items-center gap-1`} aria-expanded={dd} aria-haspopup="menu" onClick={() => setDd((v) => !v)}>
+            <button type="button" className={`${link(pathname.startsWith("/resources"))} flex items-center gap-1 ${pathname.startsWith("/resources") ? "border-b-2 border-brand" : ""}`} aria-expanded={dd} aria-haspopup="menu" onClick={() => setDd((v) => !v)}>
               Resources <ChevronDownIcon width={16} height={16} className={`transition-transform ${dd ? "rotate-180" : ""}`} />
             </button>
             {dd && (

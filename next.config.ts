@@ -7,8 +7,9 @@ const config: NextConfig = {
   experimental: { inlineCss: true },
   async redirects() {
     return [
-      { source: "/services", destination: "/#services", permanent: true },
       { source: "/index", destination: "/", permanent: true },
+      { source: "/work", destination: "/case-studies/", permanent: true },
+      { source: "/tools/lead-cost-calculator", destination: "/resources/lead-cost-calculator/", permanent: true },
       { source: "/blog/page/1", destination: "/blog/", permanent: true },
     ];
   },

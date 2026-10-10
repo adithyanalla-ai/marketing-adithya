@@ -13,7 +13,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { Toc } from "@/components/Toc";
 import { ShareLinks } from "@/components/ShareLinks";
 import { AuthorBox } from "@/components/AuthorBox";
-import { CtaBanner } from "@/components/CtaBanner";
+import { CTABand } from "@/components/sections/CTABand";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { PostCard, formatDate } from "@/components/PostCard";
 import { mdxComponents } from "@/components/mdx";
@@ -55,6 +55,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const url = canonical(`/blog/${post.slug}/`);
 
   return (
+    <>
     <div className="mx-auto max-w-[1200px] px-6 py-12">
       <JsonLd data={[blogPostingLd(post), ...(faq.length ? [faqLd(faq)] : [])]} />
       <Breadcrumbs items={[{ name: "Blog", path: "/blog/" }, { name: post.category, path: `/blog/category/${slugify(post.category)}/` }, { name: post.title, path: `/blog/${post.slug}/` }]} />
@@ -95,7 +96,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <div className="mt-8"><ShareLinks url={url} title={post.title} /></div>
           <div className="mt-10"><AuthorBox /></div>
 
-          <section aria-labelledby="nl-h" className="mt-10 rounded-2xl border border-line bg-white p-6">
+          <section aria-labelledby="nl-h" className="mt-10 card p-6">
             <h2 id="nl-h" className="text-xl font-semibold">Get new articles by email</h2>
             <p className="mt-1 text-sm text-muted">One email when a new article is published. No spam.</p>
             <div className="mt-4"><NewsletterForm /></div>
@@ -107,10 +108,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               <div className="mt-4 grid gap-5 md:grid-cols-2">{related.map((r) => <PostCard key={r.slug} post={r} />)}</div>
             </section>
           )}
-          <div className="mt-12"><CtaBanner /></div>
-        </article>
+          </article>
         <aside className="hidden lg:block"><div className="sticky top-24"><Toc items={toc} /></div></aside>
       </div>
-    </div>
+      </div>
+      <CTABand />
+    </>
   );
 }

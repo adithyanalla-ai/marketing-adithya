@@ -26,7 +26,7 @@ export function BlogSearch({ items }: { items: Item[] }) {
         placeholder="Search articles" className="min-h-11 w-full rounded-full border border-line bg-white px-6"
       />
       {q.trim().length >= 2 && (
-        <ul className="mt-3 space-y-2 rounded-2xl border border-line bg-white p-4" aria-live="polite">
+        <ul className="mt-3 space-y-2 card p-4" aria-live="polite">
           {results.length === 0 && <li className="text-sm text-muted">No articles match “{q}”.</li>}
           {results.map((r) => (
             <li key={r.slug}>

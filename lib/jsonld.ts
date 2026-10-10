@@ -11,6 +11,9 @@ export const personLd = () => ({
   name: SITE.name,
   url: abs("/"),
   jobTitle: "Growth and Performance Marketer",
+  image: abs("/adithya.jpg"),
+  alumniOf: { "@type": "CollegeOrUniversity", name: "KL University" },
+  knowsLanguage: ["English", "Telugu", "Hindi"],
   address: {
     "@type": "PostalAddress",
     addressLocality: SITE.address.locality,

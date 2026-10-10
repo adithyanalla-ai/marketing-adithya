@@ -3,10 +3,12 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/nav/Navbar";
+import { Deco } from "@/components/ui/Deco";
 import { Footer } from "@/components/Footer";
 import { SITE } from "@/lib/site";
 
 const inter = localFont({ src: "./fonts/inter.woff2", variable: "--font-inter", display: "optional", weight: "100 900", preload: true });
+const caveat = localFont({ src: "./fonts/caveat.woff2", variable: "--font-hand", display: "swap", weight: "400 700", preload: false });
 const jakarta = localFont({ src: "./fonts/jakarta.woff2", variable: "--font-jakarta", display: "optional", weight: "100 900", preload: true });
 
 export const metadata: Metadata = {
@@ -28,11 +30,11 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${inter.variable} ${jakarta.variable}`}>
+    <html lang="en-IN" className={`${inter.variable} ${jakarta.variable} ${caveat.variable}`}>
       <body className="antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:p-3">Skip to content</a>
         <Navbar />
-        <main id="main">{children}</main>
+        <main id="main"><Deco>{children}</Deco></main>
         <Footer />
         {SITE.ga4 && (
           <>

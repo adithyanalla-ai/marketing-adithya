@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { getTags, postsWithTag } from "@/lib/blog";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/ui/PageHero";
+import { CTABand } from "@/components/sections/CTABand";
 import { PostCard } from "@/components/PostCard";
 
 export const dynamicParams = false;
@@ -26,10 +27,10 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
   const t = find(slug);
   if (!t) notFound();
   return (
-    <div className="mx-auto max-w-[1200px] px-6 py-12">
-      <Breadcrumbs items={[{ name: "Blog", path: "/blog/" }, { name: `Tag: ${t.name}`, path: `/blog/tag/${slug}/` }]} />
-      <h1 className="mt-6 text-4xl font-semibold">Tagged: {t.name}</h1>
-      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{postsWithTag(slug).map((p) => <PostCard key={p.slug} post={p} />)}</div>
-    </div>
+    <>
+      <PageHero crumbs={[{ name: "Blog", path: "/blog/" }, { name: `Tag: ${t.name}`, path: `/blog/tag/${slug}/` }]} eyebrow="Tag" title={`Tagged: ${t.name}`} pills={null} intro={`Articles tagged “${t.name}”.`} />
+      <div className="container-x grid gap-5 pb-12 md:grid-cols-2 lg:grid-cols-3">{postsWithTag(slug).map((p) => <PostCard key={p.slug} post={p} />)}</div>
+      <CTABand />
+    </>
   );
 }

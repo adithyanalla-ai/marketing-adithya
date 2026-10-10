@@ -8,8 +8,8 @@ export function formatDate(d: string) {
 
 export function PostCard({ post, featured = false }: { post: PostMeta; featured?: boolean }) {
   return (
-    <article className={`rounded-2xl border border-line bg-white p-6 ${featured ? "md:p-10" : ""}`}>
-      <p className="text-xs font-semibold uppercase tracking-wide text-accent">
+    <article className={`card card-lift flex h-full flex-col p-6 ${featured ? "md:p-10" : ""}`}>
+      <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand">
         <Link href={`/blog/category/${slugify(post.category)}/`}>{post.category}</Link>
       </p>
       {featured ? (
@@ -17,7 +17,7 @@ export function PostCard({ post, featured = false }: { post: PostMeta; featured?
       ) : (
         <h3 className="mt-2 text-xl font-semibold"><Link href={`/blog/${post.slug}/`}>{post.title}</Link></h3>
       )}
-      <p className="mt-3 text-muted">{post.description}</p>
+      <p className="mt-3 flex-1 text-slate">{post.description}</p>
       <p className="mt-4 text-sm text-muted">
         <time dateTime={post.date}>{formatDate(post.date)}</time> · {post.readingMinutes} min read
       </p>

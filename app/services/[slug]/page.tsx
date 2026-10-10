@@ -1,14 +1,21 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { SERVICES, getService } from "@/lib/services";
+import { SERVICES, getService } from "@/content/services";
+import { getCase } from "@/content/case-studies";
 import { buildMetadata } from "@/lib/seo";
 import { postsForTags } from "@/lib/blog";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
-import { CtaBanner } from "@/components/CtaBanner";
-import { faqLd, professionalServiceLd } from "@/lib/jsonld";
+import { PageHero } from "@/components/ui/PageHero";
+import { StatCard } from "@/components/ui/StatCard";
+import { CompactCard } from "@/components/ui/CompactCard";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { IconChip } from "@/components/ui/IconChip";
+import { ToolsStrip } from "@/components/sections/ToolsStrip";
+import { FaqSection } from "@/components/sections/FaqSection";
+import { CTABand } from "@/components/sections/CTABand";
 import { PostCard } from "@/components/PostCard";
+import { CheckIcon, ArrowRightIcon } from "@/components/icons";
 import { abs } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -24,84 +31,101 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const s = getService((await params).slug);
   if (!s) notFound();
   const posts = postsForTags(s.relatedTags, 3);
-  const others = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 3);
-  const service = {
+  const related = s.relatedServices.map((r) => getService(r)!).filter(Boolean);
+  const caseStudy = s.caseSlug ? getCase(s.caseSlug) : undefined;
+  const post = s.postSlug ? posts.find((p) => p.slug === s.postSlug) : undefined;
+
+  const serviceLd = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: s.name,
     description: s.metaDescription,
     url: abs(`/services/${s.slug}/`),
-    provider: { "@id": professionalServiceLd()["@id"] },
-    areaServed: ["Hyderabad", "Telangana", "India"],
+    serviceType: s.name,
+    provider: { "@type": "ProfessionalService", name: "Adithya Reddy Marketing", url: abs("/") },
+    areaServed: [{ "@type": "City", name: "Hyderabad" }, { "@type": "AdministrativeArea", name: "Telangana" }, { "@type": "Country", name: "India" }],
   };
+
   return (
-    <div className="mx-auto max-w-4xl px-6 py-12">
-      <JsonLd data={[service, faqLd(s.faqs)]} />
-      <Breadcrumbs items={[{ name: "Services", path: "/#services" }, { name: s.name, path: `/services/${s.slug}/` }]} />
-      <article>
-        <h1 className="mt-6 text-4xl font-semibold leading-tight">{s.h1}</h1>
-        <p className="mt-4 text-lg text-muted">{s.intro}</p>
+    <>
+      <JsonLd data={serviceLd} />
+      <PageHero
+        crumbs={[{ name: "Services", path: "/services/" }, { name: s.name, path: `/services/${s.slug}/` }]}
+        eyebrow={s.eyebrow}
+        title={s.h1}
+        intro={s.intro}
+        media={<StatCard rows={s.stats} className="mx-auto max-w-sm lg:ml-auto" />}
+      />
 
-        <section aria-labelledby="d-h" className="mt-12">
-          <h2 id="d-h" className="text-2xl font-semibold">What you get</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5">{s.deliverables.map((d) => <li key={d}>{d}</li>)}</ul>
-        </section>
-
-        <section aria-labelledby="p-h" className="mt-12">
-          <h2 id="p-h" className="text-2xl font-semibold">How it works</h2>
-          <ol className="mt-4 grid gap-4 sm:grid-cols-2">
-            {s.process.map((p, i) => (
-              <li key={p.step} className="rounded-2xl border border-line bg-white p-5">
-                <h3 className="font-semibold">{i + 1}. {p.step}</h3>
-                <p className="mt-1 text-sm text-muted">{p.detail}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section aria-labelledby="proof-h" className="mt-12">
-          <h2 id="proof-h" className="text-2xl font-semibold">Proof</h2>
-          {s.proof.length ? (
-            <ul className="mt-4 space-y-4">
-              {s.proof.map((p) => (
-                <li key={p.title} className="rounded-2xl border border-line bg-white p-5">
-                  <h3 className="font-semibold">{p.title}</h3>
-                  <p className="mt-1 text-lg">{p.result}</p>
-                  {p.postSlug && <Link className="mt-2 inline-block text-sm font-semibold text-accent underline" href={`/blog/${p.postSlug}/`}>Read the case write-up</Link>}
-                </li>
+      <section aria-labelledby="what-h" className="container-x py-12">
+        <SectionHeader eyebrow="The service" title="What it is and who it is for" id="what-h" />
+        <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
+          <div className="space-y-4 text-[17px] leading-relaxed text-ink/90">
+            {s.whatItIs.map((p) => <p key={p}>{p}</p>)}
+            <h3 className="pt-3 text-lg">Who it is for</h3>
+            <ul className="space-y-2.5">
+              {s.audience.map((a) => (
+                <li key={a} className="flex gap-3 text-[16px]"><CheckIcon width={20} height={20} className="mt-0.5 shrink-0 text-success" strokeWidth={3} />{a}</li>
               ))}
             </ul>
-          ) : (
-            <p className="mt-4 text-muted">
-              Case-study details for this service are shared on a call. See other <Link className="underline" href="/work/">results and case studies</Link>.
-            </p>
+          </div>
+          <div className="card p-6">
+            <h3 className="text-lg">What you get</h3>
+            <ul className="mt-4 space-y-3">
+              {s.deliverables.map((d) => (
+                <li key={d} className="flex gap-3 text-[15px] text-slate"><span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-brand" />{d}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="how-h" className="container-x py-12">
+        <SectionHeader eyebrow="How I do it" title="From plan to measurable results" id="how-h" description="A short, repeatable process, reviewed against your numbers as results come in." />
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {s.how.map((h) => <CompactCard key={h.title} icon={h.icon} title={h.title} text={h.text} />)}
+        </div>
+      </section>
+
+      <section aria-labelledby="proof-h" className="container-x py-12">
+        <SectionHeader eyebrow="Proof" title="Results from my work" id="proof-h" />
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {s.stats.map((st) => (
+            <div key={st.label} className="card p-6">
+              <IconChip name={st.icon} />
+              <p className="mt-4 font-display text-3xl font-extrabold tracking-tight text-brand">{st.value}</p>
+              <p className="mt-1 text-[15px] text-slate">{st.label}</p>
+            </div>
+          ))}
+          {(caseStudy || post) && (
+            <div className="card flex flex-col justify-between p-6">
+              <p className="text-[15px] text-slate">{caseStudy ? "Read the case study behind this result." : "Read how this works in practice."}</p>
+              <Link href={caseStudy ? `/case-studies/${caseStudy.slug}/` : `/blog/${post!.slug}/`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:underline">
+                {caseStudy ? caseStudy.name : post!.title} <ArrowRightIcon width={16} height={16} />
+              </Link>
+            </div>
           )}
+        </div>
+      </section>
+
+      <ToolsStrip names={s.tools} id="service-tools" heading="Tools used" />
+      <FaqSection items={s.faqs} />
+
+      {posts.length > 0 && (
+        <section aria-labelledby="posts-h" className="container-x py-12">
+          <SectionHeader eyebrow="From the blog" title="Related articles" id="posts-h" />
+          <div className="mt-8 grid gap-5 md:grid-cols-3">{posts.map((p) => <PostCard key={p.slug} post={p} />)}</div>
         </section>
+      )}
 
-        <section aria-labelledby="faq-h" className="mt-12">
-          <h2 id="faq-h" className="text-2xl font-semibold">Frequently asked questions</h2>
-          <dl className="mt-4 space-y-5">
-            {s.faqs.map((f) => (
-              <div key={f.q}><dt className="font-semibold">{f.q}</dt><dd className="mt-1 text-muted">{f.a}</dd></div>
-            ))}
-          </dl>
-        </section>
+      <section aria-labelledby="rel-h" className="container-x py-12">
+        <SectionHeader eyebrow="Keep exploring" title="Related services" id="rel-h" />
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {related.map((r) => <CompactCard key={r.slug} icon={r.icon} title={r.name} text={r.cardText.split(".")[0] + "."} href={`/services/${r.slug}/`} />)}
+        </div>
+      </section>
 
-        {posts.length > 0 && (
-          <section aria-labelledby="rel-h" className="mt-12">
-            <h2 id="rel-h" className="text-2xl font-semibold">Related articles</h2>
-            <div className="mt-4 grid gap-5 md:grid-cols-2">{posts.map((p) => <PostCard key={p.slug} post={p} />)}</div>
-          </section>
-        )}
-      </article>
-
-      <div className="mt-12"><CtaBanner heading={`Talk about ${s.name.toLowerCase()}`} /></div>
-      <nav aria-label="Other services" className="mt-10 text-sm">
-        <h2 className="font-semibold">Other services</h2>
-        <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1">
-          {others.map((o) => <li key={o.slug}><Link className="underline" href={`/services/${o.slug}/`}>{o.name}</Link></li>)}
-        </ul>
-      </nav>
-    </div>
+      <CTABand headline={`Talk about ${s.label}`} />
+    </>
   );
 }
