@@ -10,7 +10,7 @@ export const ICONS = {
   sparkle: I.SparkleIcon, target: I.TargetIcon, gear: I.GearIcon, trend: I.TrendIcon, tag: I.TagIcon,
   mail: I.MailIcon, linkedin: I.LinkedInIcon, clock: I.ClockIcon, book: I.BookIcon, award: I.AwardIcon,
   language: I.LanguageIcon, briefcase: I.BriefcaseIcon, layers: I.LayersIcon, chat: I.ChatIcon,
-  calculator: I.CalculatorIcon, wrench: I.WrenchIcon, calendar: I.CalendarIcon, check: I.CheckIcon, crown: I.CrownIcon,
+  calculator: I.CalculatorIcon, phone: I.PhoneIcon, wrench: I.WrenchIcon, calendar: I.CalendarIcon, check: I.CheckIcon, crown: I.CrownIcon,
 } satisfies Record<string, Ic>;
 
 export type IconName = keyof typeof ICONS;

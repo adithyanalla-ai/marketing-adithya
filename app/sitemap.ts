@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: canonical("/resources/") },
     { url: canonical("/resources/lead-cost-calculator/") },
     { url: canonical("/contact/") },
+    { url: canonical("/privacy/") },
     { url: canonical("/blog/"), lastModified: lm(newest(posts)), changeFrequency: "weekly", priority: 0.8 },
     ...SERVICES.map((s) => ({ url: canonical(`/services/${s.slug}/`), priority: 0.9 })),
     ...posts.map((p) => ({ url: canonical(`/blog/${p.slug}/`), lastModified: lm(p.updated), priority: 0.7 })),

@@ -19,7 +19,7 @@ export function GET() {
     "## Key pages",
     `- [About](${canonical("/about/")})`,
     `- [Work and results](${canonical("/work/")})`,
-    `- [Contact](${canonical("/contact/")})`,
+    `- [Contact](${canonical("/contact/")}): phone/WhatsApp ${SITE.phone}`,
     "",
     "## Blog",
     ...getPosts().map((p) => `- [${p.title}](${canonical(`/blog/${p.slug}/`)}): ${p.description}`),

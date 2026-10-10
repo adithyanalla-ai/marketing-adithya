@@ -12,6 +12,7 @@ export const personLd = () => ({
   name: SITE.name,
   url: abs("/"),
   jobTitle: "Growth and Performance Marketer",
+  telephone: SITE.telephone,
   image: abs("/adithya.jpg"),
   alumniOf: { "@type": "CollegeOrUniversity", name: "KL University" },
   knowsLanguage: ["English", "Telugu", "Hindi"],
@@ -52,6 +53,7 @@ export const professionalServiceLd = () => ({
     { "@type": "AdministrativeArea", name: "Telangana" },
     { "@type": "Country", name: "India" },
   ],
+  telephone: SITE.telephone,
   ...(SITE.email ? { email: SITE.email } : {}),
   sameAs: sameAs(),
 });

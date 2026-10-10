@@ -31,6 +31,8 @@ export function Footer() {
             <li><Link className="hover:text-accent" href="/resources/">Resources</Link></li>
             <li><Link className="hover:text-accent" href="/about/">About</Link></li>
             <li><Link className="hover:text-accent" href="/contact/">Contact</Link></li>
+            <li><a className="hover:text-accent" href={`tel:${SITE.telephone.replace(/-/g, "")}`}>{SITE.phone}</a></li>
+            <li><Link className="hover:text-accent" href="/privacy/">Privacy</Link></li>
             <li><a className="hover:text-accent" href="/rss.xml">RSS feed</a></li>
             {SITE.linkedin && <li><a className="hover:text-accent" href={SITE.linkedin} rel="me noopener">LinkedIn profile</a></li>}
           </ul>

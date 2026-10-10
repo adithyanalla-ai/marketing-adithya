@@ -1,3 +1,5 @@
+import { CONTACT } from "../content/contact";
+
 export const SITE = {
   name: "Adithya Reddy",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://marketing.adithyareddy.online").replace(/\/$/, ""),
@@ -5,12 +7,14 @@ export const SITE = {
   description:
     "Adithya Reddy is a growth and performance marketer in Hyderabad, India, working on lead generation, Meta ads, marketing analytics and LLM automation.",
   locale: "en_IN",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "",
-  linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
+  email: CONTACT.email,
+  phone: CONTACT.phoneDisplay,
+  telephone: CONTACT.phoneSchema,
+  linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || CONTACT.linkedinUrl,
   ssrn: process.env.NEXT_PUBLIC_SSRN_URL || "",
   hackerrank: process.env.NEXT_PUBLIC_HACKERRANK_URL || "",
   portfolio: process.env.NEXT_PUBLIC_PORTFOLIO_URL || "https://adithyareddy.online",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL || "",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL || CONTACT.whatsappUrl,
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact/",
   ga4: process.env.NEXT_PUBLIC_GA4_ID || "",
   gscVerification: process.env.GOOGLE_SITE_VERIFICATION || "",

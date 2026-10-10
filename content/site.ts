@@ -62,3 +62,4 @@ export const ABOUT = {
 };
 export * from "./services";
 export * from "./case-studies";
+export * from "./contact";

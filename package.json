@@ -14,7 +14,9 @@
     "check:cases": "tsx scripts/check-case-studies.ts",
     "prebuild": "tsx scripts/check-case-studies.ts",
     "seo:audit": "tsx scripts/seo-audit.ts",
-    "seo:links": "tsx scripts/seo-links.ts"
+    "seo:links": "tsx scripts/seo-links.ts",
+    "contact:dry": "tsx scripts/contact-dry-run.ts",
+    "contact:test": "tsx scripts/contact-test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",
@@ -26,7 +28,8 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "reading-time": "^1.5.0",
-    "rehype-slug": "^6.0.0"
+    "rehype-slug": "^6.0.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@fontsource-variable/caveat": "^5.3.0",

@@ -42,7 +42,7 @@ export function GET() {
     "## Blog",
     ...getPosts().map((p) => `- [${p.title}](${canonical(`/blog/${p.slug}/`)}): ${p.description}`),
     "",
-    `Contact: ${canonical("/contact/")}`,
+    `Contact: ${canonical("/contact/")} | Phone/WhatsApp: ${SITE.phone}`,
     `Hyderabad page: ${canonical("/hyderabad-growth-marketing-consultant/")}`,
     `RSS: ${SITE.url}/rss.xml`,
   ];

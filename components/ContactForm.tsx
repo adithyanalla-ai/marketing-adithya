@@ -1,15 +1,17 @@
 "use client";
 import { useRef, useState } from "react";
-import { CheckCircleIcon } from "./icons";
+import Link from "next/link";
+import { CheckCircleIcon, ChatIcon } from "./icons";
+import { BUDGETS, CONTACT } from "@/content/contact";
+import { track } from "@/lib/analytics";
 
-const BUDGETS = ["Not sure yet", "Under INR 50,000 per month", "INR 50,000 to 2,00,000 per month", "Above INR 2,00,000 per month", "One-off project"];
 type Errors = Record<string, string>;
 
 export function ContactForm() {
   const started = useRef(Date.now());
   const [state, setState] = useState<"idle" | "busy" | "ok" | "err">("idle");
   const [errors, setErrors] = useState<Errors>({});
-  const [msg, setMsg] = useState("");
+  const [first, setFirst] = useState("");
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -23,13 +25,15 @@ export function ContactForm() {
     setState("busy");
     try {
       const res = await fetch("/api/contact/", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...f, t: started.current }) });
-      const j = await res.json();
-      setMsg(j.message ?? "");
+      const j = (await res.json().catch(() => ({}))) as { errors?: Errors };
       if (j.errors) setErrors(j.errors);
-      setState(res.ok ? "ok" : "err");
+      if (res.ok) {
+        setFirst(f.name.trim().split(/\s+/)[0]);
+        setState("ok");
+        track("form_submit", { form: "contact" });
+      } else setState("err");
     } catch {
-      setMsg("Something went wrong. Please try again.");
-      setState("err");
+      setState("err"); // visitors never see provider or network details
     }
   }
 
@@ -37,8 +41,12 @@ export function ContactForm() {
     return (
       <div role="status" className="card flex flex-col items-center p-10 text-center">
         <CheckCircleIcon width={48} height={48} className="text-success" />
-        <h2 className="mt-4 text-2xl">Message sent</h2>
-        <p className="mt-2 text-slate">{msg}</p>
+        <h2 className="mt-4 text-2xl">Thanks, {first}. Your message is in.</h2>
+        <p className="mt-2 text-slate">I&apos;ll reply by email soon.</p>
+        <p className="mt-6 text-sm text-slate">Need a faster route?</p>
+        <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener" onClick={() => track("book_call_click", { label: "whatsapp_after_submit" })} className="btn btn-primary mt-2">
+          <ChatIcon width={18} height={18} /> Chat on WhatsApp
+        </a>
       </div>
     );
   }
@@ -62,8 +70,13 @@ export function ContactForm() {
       <div><label htmlFor="c-message" className="text-sm font-bold">How can I help? *</label><textarea id="c-message" name="message" rows={5} className={`${field} py-3`} {...a11y("message")} />{err("message")}</div>
       {/* Honeypot: hidden from people, filled by bots */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
-      <button type="submit" disabled={state === "busy"} className="btn btn-primary w-full sm:w-auto">{state === "busy" ? "Sending…" : "Send message"}</button>
-      {state === "err" && <p role="alert" className="text-sm font-semibold text-red-600">{msg}</p>}
+      <button type="submit" disabled={state === "busy"} aria-busy={state === "busy"} className="btn btn-primary w-full disabled:opacity-70 sm:w-auto">{state === "busy" ? "Sending…" : "Send message"}</button>
+      {state === "err" && (
+        <p role="alert" className="text-sm font-semibold text-red-600">
+          Sorry, your message could not be sent. Please call <a className="underline" href={CONTACT.phoneTel}>{CONTACT.phoneDisplay}</a> or <a className="underline" href={CONTACT.whatsappUrl} target="_blank" rel="noopener">message me on WhatsApp</a>.
+        </p>
+      )}
+      <p className="text-sm text-slate">Your details are used only to reply to your enquiry. See the <Link className="font-semibold text-brand underline" href="/privacy/">privacy policy</Link>.</p>
     </form>
   );
 }
