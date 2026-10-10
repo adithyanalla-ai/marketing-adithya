@@ -42,7 +42,7 @@ export const SERVICES: Service[] = [
     cardText: "Segmented, scored lead pipelines that route the right enquiries to sales faster. Lead generation consulting from Hyderabad, serving India.",
     h1: "AI-Assisted Lead Generation in Hyderabad and across India",
     eyebrow: "Service · Lead generation",
-    metaTitle: "AI Lead Generation Services | Adithya Reddy",
+    metaTitle: "AI Lead Generation Consultant | Adithya Reddy",
     metaDescription: "Segmented, scored lead pipelines that route the right enquiries to sales faster. Lead generation consulting from Hyderabad, serving India.",
     intro: `I build lead pipelines where every enquiry is segmented, scored and routed, so sales spends time on the people most likely to convert. ${base}`,
     whatItIs: [
@@ -80,7 +80,7 @@ export const SERVICES: Service[] = [
     cardText: "Structured Meta ads A/B testing and performance marketing to lower cost per lead. Hyderabad-based, working with businesses across India.",
     h1: "Meta Ads and Performance Marketing That Lowers Cost per Lead",
     eyebrow: "Service · Paid media",
-    metaTitle: "Meta Ads & Performance Marketing | Adithya Reddy",
+    metaTitle: "Meta Ads Expert in Hyderabad | Adithya Reddy",
     metaDescription: "Structured Meta ads A/B testing and performance marketing to lower cost per lead. Hyderabad-based, working with businesses across India.",
     intro: `Disciplined creative and audience testing on Meta, measured on cost per lead and lead quality rather than clicks. ${base}`,
     whatItIs: [
@@ -118,7 +118,7 @@ export const SERVICES: Service[] = [
     cardText: "Enquiry-to-admission marketing for education institutions: campaigns, lead tracking and follow-up. Based in Hyderabad, Telangana.",
     h1: "Admissions Marketing for Colleges and Schools in India",
     eyebrow: "Service · Education marketing",
-    metaTitle: "Admissions Marketing Services | Adithya Reddy",
+    metaTitle: "Admissions Marketing Consultant | Adithya Reddy",
     metaDescription: "Enquiry-to-admission marketing for education institutions: campaigns, lead tracking and follow-up. Based in Hyderabad, Telangana.",
     intro: `Campaigns and follow-up systems that turn admission enquiries into applications, tracked from first click to enrolment. ${base}`,
     whatItIs: [
@@ -151,7 +151,7 @@ export const SERVICES: Service[] = [
     cardText: "Digital outreach, message testing and reporting for election campaigns. Data-driven strategies to increase voter engagement and support.",
     h1: "Election Campaign Marketing and Voter Outreach in India",
     eyebrow: "Service · Campaign marketing",
-    metaTitle: "Election Campaign Marketing | Adithya Reddy",
+    metaTitle: "Election Campaign Marketing Consultant India",
     metaDescription: "Digital outreach, message testing and reporting for election campaigns in Telangana and across India, with a data-led approach.",
     intro: `Digital outreach, message testing and ground-level reporting for campaigns, planned to follow election commission and platform rules. ${base}`,
     whatItIs: [
@@ -185,7 +185,7 @@ export const SERVICES: Service[] = [
     cardText: "Power BI dashboards that connect ad spend, leads and revenue. Clear insights to make better marketing decisions.",
     h1: "Marketing Analytics and Power BI Dashboards",
     eyebrow: "Service · Analytics",
-    metaTitle: "Marketing Analytics & Power BI | Adithya Reddy",
+    metaTitle: "Power BI Marketing Dashboard Consultant | Adithya",
     metaDescription: "Power BI dashboards that connect ad spend, leads and revenue so marketing decisions rest on one view. Hyderabad-based, serving India.",
     intro: `One reliable view of spend, leads and outcomes, so the team stops arguing about whose spreadsheet is right. ${base}`,
     whatItIs: [
@@ -218,7 +218,7 @@ export const SERVICES: Service[] = [
     cardText: "Automate client marketing reports with LLMs: faster insights, summaries and recommendations to save time and improve decision-making.",
     h1: "LLM Reporting Automation for Marketing Teams",
     eyebrow: "Service · AI automation",
-    metaTitle: "LLM Reporting Automation | Adithya Reddy",
+    metaTitle: "LLM Reporting Automation for Marketing | Adithya",
     metaDescription: "Automate client marketing reports with LLMs: from three days to four hours. Built with LangChain and the Claude API by a Hyderabad marketer.",
     intro: `Automated, reviewed reporting where LLMs draft the narrative from your numbers and a person approves it. ${base}`,
     whatItIs: [

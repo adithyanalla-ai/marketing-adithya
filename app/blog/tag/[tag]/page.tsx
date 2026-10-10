@@ -14,12 +14,13 @@ export async function generateMetadata({ params }: { params: Promise<{ tag: stri
   const slug = (await params).tag;
   const t = find(slug);
   if (!t) return {};
-  return buildMetadata({
+  // Tag archives are thin: keep them crawlable for discovery but out of the index.
+  return { ...buildMetadata({
     title: `Articles tagged ${t.name} | Adithya Reddy`,
     description: `Articles tagged “${t.name}” on growth marketing, lead generation and AI automation.`,
     path: `/blog/tag/${slug}/`,
     ogLabel: "Tag",
-  });
+  }), robots: { index: false, follow: true } };
 }
 
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {

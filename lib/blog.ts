@@ -24,6 +24,8 @@ export type PostMeta = {
   trendScore?: number;
   /** id of the case study this post is based on (content/case-studies) */
   caseStudy?: string;
+  /** service slug a guide links to */
+  service?: string;
   /** slug of an older published post this one should replace when published */
   supersedes?: string;
   readingMinutes: number;
@@ -41,8 +43,8 @@ function toDateString(v: unknown): string {
   return String(v ?? "");
 }
 
-function parseFile(file: string): Post {
-  const raw = fs.readFileSync(path.join(POSTS_DIR, file), "utf8");
+function parseFile(file: string, dir: string = POSTS_DIR): Post {
+  const raw = fs.readFileSync(path.join(dir, file), "utf8");
   const { data, content } = matter(raw);
   const date = toDateString(data.date);
   return {
@@ -62,11 +64,23 @@ function parseFile(file: string): Post {
     trendSource: data.trendSource ? String(data.trendSource) : undefined,
     trendScore: typeof data.trendScore === "number" ? data.trendScore : undefined,
     caseStudy: data.caseStudy ? String(data.caseStudy) : undefined,
+    service: data.service ? String(data.service) : undefined,
     supersedes: data.supersedes ? String(data.supersedes) : undefined,
     readingMinutes: Math.max(1, Math.ceil(readingTime(content).minutes)),
     content,
   };
 }
+
+export const GUIDES_DIR = path.join(process.cwd(), "content", "guides");
+
+/** Every guide on disk, drafts included. Only scripts should use this. */
+export function getAllGuidesIncludingDrafts(): Post[] {
+  if (!fs.existsSync(GUIDES_DIR)) return [];
+  return fs.readdirSync(GUIDES_DIR).filter((f) => /\.mdx?$/.test(f)).map((f) => parseFile(f, GUIDES_DIR));
+}
+/** Published guides (draft: false). */
+export const getGuides = () => getAllGuidesIncludingDrafts().filter((g) => !g.draft).sort((a, b) => (a.title < b.title ? -1 : 1));
+export const getGuide = (slug: string) => getGuides().find((g) => g.slug === slug);
 
 /** Every post on disk, drafts included. Only scripts should use this. */
 export function getAllPostsIncludingDrafts(): Post[] {
@@ -74,7 +88,7 @@ export function getAllPostsIncludingDrafts(): Post[] {
   return fs
     .readdirSync(POSTS_DIR)
     .filter((f) => /\.mdx?$/.test(f) && !f.startsWith("_"))
-    .map(parseFile);
+    .map((f) => parseFile(f));
 }
 
 /** Published posts only (draft: false), newest first. The single source for pages, sitemap and RSS. */

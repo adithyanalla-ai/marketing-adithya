@@ -28,7 +28,7 @@ export function buildMetadata(o: Opts): Metadata {
   return {
     title: { absolute: o.title },
     description: o.description,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages: { "en-IN": url, "x-default": url } },
     openGraph: {
       type: o.type ?? "website",
       url,

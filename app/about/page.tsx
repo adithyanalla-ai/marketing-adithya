@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { metaFromMap } from "@/lib/seo-map";
 import { ABOUT, MORE_STATS, STATS } from "@/content/site";
 import { CASE_STUDIES } from "@/content/case-studies";
 import { view } from "@/lib/case-study";
@@ -16,12 +16,7 @@ import { IconChip } from "@/components/ui/IconChip";
 import { StatsStrip } from "@/components/sections/StatsStrip";
 import { CTABand } from "@/components/sections/CTABand";
 
-export const metadata: Metadata = buildMetadata({
-  title: "About Adithya Reddy | Marketer in Hyderabad",
-  description: "Adithya Reddy is a growth and performance marketer in Hyderabad, India, combining paid media, analytics and LLM automation.",
-  path: "/about/",
-  ogLabel: "About",
-});
+export const metadata: Metadata = metaFromMap("/about/", "About");
 
 function HeroMedia() {
   return (
@@ -107,7 +102,7 @@ export default function About() {
               ))}
             </ul>
           </div>
-          <div className="card p-6">
+          <div id="research" className="card scroll-mt-24 p-6">
             <div className="flex items-center gap-3"><IconChip name="book" size="sm" /><h3 className="text-lg">Published research</h3></div>
             <ul className="mt-5 space-y-3">
               {research.map((r) => (

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { metaFromMap } from "@/lib/seo-map";
 import { CASE_STUDIES } from "@/content/case-studies";
 import { casePath, view } from "@/lib/case-study";
 import { PageHero } from "@/components/ui/PageHero";
@@ -8,12 +8,7 @@ import { IconChip } from "@/components/ui/IconChip";
 import { CTABand } from "@/components/sections/CTABand";
 import { ArrowRightIcon } from "@/components/icons";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Case Studies | Adithya Reddy Marketing",
-  description: "Admissions, election, lead generation and analytics work by Adithya Reddy, a growth marketer and AI automation consultant in Hyderabad.",
-  path: "/case-studies/",
-  ogLabel: "Case studies",
-});
+export const metadata: Metadata = metaFromMap("/case-studies/", "Case studies");
 
 export default function CaseStudies() {
   return (

@@ -1,0 +1,124 @@
+---
+title: "AI Marketing Automation: A Practical Guide for Teams"
+description: "How to use AI and LLMs to automate marketing work safely: where it helps, a scorecard to pick what to automate, a five-layer stack and a rollout plan."
+slug: "ai-marketing-automation"
+date: "2026-10-10"
+updated: "2026-10-10"
+category: "Guides"
+tags: ["ai marketing", "llm automation", "marketing automation"]
+primaryKeyword: "ai marketing automation"
+secondaryKeywords: ["marketing automation with ai", "llm marketing automation"]
+sources: []
+author: "Adithya Reddy"
+draft: true
+service: "llm-reporting-automation"
+trendSource: "manual"
+trendScore: 0
+---
+
+<KeyTakeaways>
+
+- Automate repeatable, rule-bound work first; keep judgement and recommendations human.
+- Use a scorecard to choose what to automate instead of following the tool of the month.
+- Build in five layers (data, logic, language model, verification, delivery) and never skip verification.
+- Start with one report or workflow, prove it, then expand.
+
+</KeyTakeaways>
+
+"AI marketing automation" covers everything from scheduling posts to drafting client reports. Most of it is hype; some of it saves real time. This guide is the framework I use to tell the difference. It is written for marketing teams and business owners in India, and it is deliberately tool-agnostic. If you want a build rather than a guide, see [LLM reporting automation](/services/llm-reporting-automation/).
+
+## What AI marketing automation is, and is not
+
+It **is** using software, increasingly language models, to do repeatable marketing tasks: pulling data, building tables, drafting commentary, classifying enquiries, drafting follow-ups and scheduling.
+
+It is **not** a replacement for strategy, for understanding your customer, or for checking facts. A language model produces fluent text; it does not know whether the number in that text is right.
+
+## Where AI helps, and where a person must stay
+
+| Task | Good candidate? | Human check |
+|---|---|---|
+| Pulling data from ad platforms and sheets | Yes | Spot-check totals against the platform |
+| Building tables and charts | Yes | Confirm definitions |
+| Drafting report commentary from supplied data | Yes, as a first draft | Verify every figure; add recommendations |
+| Classifying free-text enquiries into segments | Yes | Review a sample each month |
+| Drafting follow-up messages | Yes, as a draft | Approve before sending |
+| Choosing strategy or budget | No | Entirely human |
+| Anything with legal or compliance exposure | Carefully | Entirely human sign-off |
+
+## The automation scorecard
+
+Score each candidate task from 1 (low) to 3 (high) on four questions. Add them up: the highest totals go first.
+
+| Question | 1 | 2 | 3 |
+|---|---|---|---|
+| How often does it happen? | Rarely | Monthly | Weekly or daily |
+| How rule-based is it? | Needs judgement | Mixed | Mostly rules |
+| How cheap is a mistake? | Costly | Moderate | Easily fixed |
+| Is the data available and clean? | No | Partly | Yes |
+
+Anything scoring low on "cost of a mistake" needs a stronger human check, whatever its total.
+
+## The five-layer stack
+
+1. **Data layer.** One place where the numbers live (a database, a Power BI model or even a clean sheet). The model only ever sees data you supply.
+2. **Logic layer.** Plain code (Python, SQL) for everything that has a right answer: totals, deduplication, scoring rules.
+3. **Language layer.** The LLM, through a framework such as LangChain or directly through the Claude API, for the parts that are about language: summaries, classification, drafts.
+4. **Verification layer.** Automatic checks that every number in the draft matches the data, plus a person's review.
+5. **Delivery layer.** Scheduling and sending, with a log of what was sent.
+
+The verification layer is the one most teams skip, and the one that protects your credibility.
+
+## Worked example: a monthly client report
+
+1. **Fix the template.** List the sections the client reads and the numbers behind each.
+2. **Pull the data** into one table with SQL or Python (Pandas).
+3. **Compute everything numeric in code**, not in the model.
+4. **Ask the model to write commentary** from the computed table, with an instruction to use only the supplied figures.
+5. **Verify.** A script extracts the numbers in the commentary and compares them with the table. Mismatches block sending.
+6. **Review and send.** A person adds recommendations and context.
+
+There is a shorter walkthrough in [LLM automation for client reports](/blog/llm-automation-client-reports/). The principle is the same everywhere: the model drafts, the code checks, a person decides.
+
+## Guardrails that matter
+
+- **Never ask the model to recall numbers.** Pass them in.
+- **Keep prompts and templates in version control**, so you can see what changed when output changes.
+- **Log inputs and outputs** for anything sent to a client.
+- **Be careful what data you send to an AI provider.** Send the figures the task needs, not entire customer lists, and agree with clients what is shared.
+- **Tell clients how reports are made.** Being open builds trust.
+
+## A rollout plan that works
+
+- **Week 1:** pick one report or workflow using the scorecard. Document the manual process.
+- **Weeks 2 to 3:** build the data and logic layers. Do not add the model yet.
+- **Weeks 3 to 4:** add the language layer and the verification layer. Run it in parallel with the manual process.
+- **Month 2:** switch over, keep the review step, measure time saved and errors caught.
+- **After that:** choose the next candidate from the scorecard.
+
+## From my experience
+
+<CaseFacts id="eject-solutions" />
+
+[ADD DETAIL]: the first workflow you automated, what the verification step caught, what you would do differently, and how clients reacted.
+
+## FAQ
+
+### Is AI marketing automation safe for client work?
+
+It can be, if every figure is verified against the source and a person reviews the output before it is sent. The risk is unchecked text, not the technology.
+
+### Which tools should I start with?
+
+Start with the data and logic you already have (SQL, Python, Power BI), and add a language model through LangChain or the Claude API only for the language tasks.
+
+### Will AI replace my marketing team?
+
+It removes repetitive work. Strategy, judgement and relationships remain human.
+
+### How do I decide what to automate first?
+
+Use the scorecard: frequent, rule-based, low-cost-of-error tasks with clean data come first.
+
+### How long does a first automation take?
+
+It depends on your data and the workflow. The rollout plan above assumes about a month for a first report, running alongside the manual process.

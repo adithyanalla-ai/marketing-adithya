@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { metaFromMap } from "@/lib/seo-map";
 import { SITE } from "@/lib/site";
 import { PageHero } from "@/components/ui/PageHero";
 import { IconChip } from "@/components/ui/IconChip";
@@ -8,12 +8,7 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { CTABand } from "@/components/sections/CTABand";
 import type { IconName } from "@/components/ui/iconMap";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Contact Adithya Reddy | Book a Marketing Call",
-  description: "Book a call with Adithya Reddy, a growth marketer in Hyderabad, India, to discuss lead generation, Meta ads or LLM automation.",
-  path: "/contact/",
-  ogLabel: "Contact",
-});
+export const metadata: Metadata = metaFromMap("/contact/", "Contact");
 
 const FAQS = [
   { q: "What happens after I send a message?", a: "I read every message personally and reply by email. If it looks like a fit, we set up a short call to go through your goals and numbers." },

@@ -25,6 +25,7 @@ export function Footer() {
         <nav aria-label="Site">
           <h2 className="text-sm font-semibold uppercase tracking-wide">Site</h2>
           <ul className="mt-3 space-y-2 text-sm">
+            <li><Link className="hover:text-accent" href="/hyderabad-growth-marketing-consultant/">Hyderabad consultant</Link></li>
             <li><Link className="hover:text-accent" href="/blog/">Blog</Link></li>
             <li><Link className="hover:text-accent" href="/case-studies/">Case studies</Link></li>
             <li><Link className="hover:text-accent" href="/resources/">Resources</Link></li>

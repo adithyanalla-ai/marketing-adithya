@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { metaFromMap } from "@/lib/seo-map";
 import { PageHero } from "@/components/ui/PageHero";
 import { LeadCostCalculator } from "@/components/LeadCostCalculator";
 import { CTABand } from "@/components/sections/CTABand";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Lead Cost Calculator | Adithya Reddy",
-  description: "Work out your cost per lead and cost per customer from ad spend, leads and conversions. A free calculator by a Hyderabad marketer.",
-  path: "/resources/lead-cost-calculator/",
-  ogLabel: "Resources",
-});
+export const metadata: Metadata = metaFromMap("/resources/lead-cost-calculator/", "Resources");
 
 export default function Page() {
   return (

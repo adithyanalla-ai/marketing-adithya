@@ -1,0 +1,123 @@
+---
+title: "Marketing Analytics with Power BI: A Practical Guide"
+description: "Build a Power BI marketing dashboard that connects spend, leads and revenue: a KPI framework, a simple data model, DAX examples and a layout template."
+slug: "marketing-analytics-power-bi"
+date: "2026-10-10"
+updated: "2026-10-10"
+category: "Guides"
+tags: ["power bi", "marketing analytics"]
+primaryKeyword: "marketing analytics power bi"
+secondaryKeywords: ["power bi for marketing", "marketing dashboard"]
+sources: []
+author: "Adithya Reddy"
+draft: true
+service: "marketing-analytics-power-bi"
+trendSource: "manual"
+trendScore: 0
+---
+
+<KeyTakeaways>
+
+- Start from decisions, then pick the KPIs that inform them.
+- Build one clean data model; dashboards are the easy part.
+- Define every metric in plain language and write it down.
+- A dashboard nobody acts on is decoration; review it on a schedule.
+
+</KeyTakeaways>
+
+Marketing teams often have plenty of numbers and little agreement on what they mean. Power BI is a good way to get one version of the truth, if the model underneath is sound. This guide covers the framework I use. For a build, see [marketing analytics and Power BI](/services/marketing-analytics-power-bi/).
+
+## 1. Start with the decisions
+
+Write the decisions the dashboard must support. For example: *which campaigns get more budget next week? Where are leads getting stuck? Is cost per lead moving the right way?* A KPI that does not inform a decision does not belong.
+
+## 2. A KPI framework by funnel stage
+
+| Stage | KPI | Definition (write yours down) |
+|---|---|---|
+| Spend | Ad spend | Total spend in the period, by channel and campaign |
+| Reach | Click-through rate (CTR) | Clicks divided by impressions |
+| Capture | Leads, cost per lead (CPL) | Spend divided by leads |
+| Quality | Qualified-lead rate | Qualified leads divided by leads |
+| Conversion | Conversion rate, cost per customer | Customers divided by leads; spend divided by customers |
+| Revenue | Return on ad spend (ROAS) | Revenue divided by spend |
+
+Fifteen or more KPIs is possible, but start with the ones in this table and add only what the team actually uses.
+
+## 3. A simple data model
+
+Use a star schema: a few **fact tables** (daily ad spend, leads, outcomes) connected to shared **dimension tables** (date, campaign, channel, segment).
+
+- Every lead carries a **source and campaign** so spend and outcomes can be joined.
+- A **date table** drives all time analysis.
+- Keep raw data separate from cleaned data, so you can trace a number back.
+
+## 4. DAX measures for marketers
+
+Start with plain, readable measures:
+
+```
+Total Spend = SUM ( AdSpend[Spend] )
+Leads = COUNTROWS ( Leads )
+CPL = DIVIDE ( [Total Spend], [Leads] )
+Qualified Rate = DIVIDE ( CALCULATE ( [Leads], Leads[Qualified] = TRUE () ), [Leads] )
+ROAS = DIVIDE ( SUM ( Outcomes[Revenue] ), [Total Spend] )
+```
+
+`DIVIDE` handles divide-by-zero safely. Build every ratio from base measures, so a fix in one place updates everywhere.
+
+## 5. Dashboard layout template
+
+1. **Top row:** the four numbers the team checks first (spend, leads, CPL, qualified rate), each with change versus the previous period.
+2. **Trend row:** CPL and leads over time.
+3. **Breakdown row:** by campaign and by channel, sortable.
+4. **Funnel row:** lead to qualified to customer, by source.
+5. **Detail page:** a table for drill-down.
+
+Use consistent colours, label units (INR) and keep one page per question.
+
+## 6. Refresh, governance and handover
+
+Schedule data refresh, document each metric in a plain-language glossary page inside the report, and agree who owns the numbers. Train the team to read the dashboard and to ask for changes in one place.
+
+## 7. Common mistakes
+
+- Reporting what is easy to measure, not what informs decisions
+- Mixing definitions of "lead" across sources
+- Too many pages and visuals
+- No owner for the data
+- No review rhythm
+
+## 8. Review rhythm
+
+Spend ten minutes at the start of each week looking at the top row and trend row, note what changed and decide one action. Once a month, check that the definitions still match how the business works.
+
+See how reporting connects to the rest of the stack in the [AI marketing automation guide](/guides/ai-marketing-automation/).
+
+## From my experience
+
+<CaseFacts id="int360-design-studio" />
+
+[ADD DETAIL]: the data sources you joined, the hardest part of the model, and one decision the dashboard changed.
+
+## FAQ
+
+### Why use Power BI for marketing analytics?
+
+It connects to many marketing data sources, models data well and is widely used in Indian organisations.
+
+### What KPIs should a marketing dashboard show?
+
+Spend, leads, cost per lead, qualified-lead rate, conversion and return on ad spend, to start with.
+
+### Do I need to know DAX?
+
+For simple dashboards, a handful of measures covers most needs. Learn more as questions get harder.
+
+### How often should the data refresh?
+
+As often as decisions are made. Daily is common for ad data; weekly can be enough for outcomes.
+
+### Can I connect spreadsheets and ad platforms together?
+
+Yes. Exports and connectors can feed the same model, as long as each record carries a campaign or source.

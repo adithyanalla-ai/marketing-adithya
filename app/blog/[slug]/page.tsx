@@ -17,6 +17,8 @@ import { CTABand } from "@/components/sections/CTABand";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { PostCard, formatDate } from "@/components/PostCard";
 import { mdxComponents } from "@/components/mdx";
+import { entryFor } from "@/content/seo/keyword-map";
+import { getGuide } from "@/lib/blog";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => getPosts().map((p) => ({ slug: p.slug }));
@@ -53,6 +55,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const related = relatedPosts(post, 3);
   const services = relatedServices(post.tags, post.category);
   const url = canonical(`/blog/${post.slug}/`);
+  const pillarSlug = entryFor(`/blog/${post.slug}/`)?.pillar;
+  const pillar = pillarSlug ? getGuide(pillarSlug) : undefined;
 
   return (
     <>
@@ -83,6 +87,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
                 {post.sources.map((s) => <li key={s.url}><a className="underline" href={s.url} rel="noopener noreferrer">{s.title}</a></li>)}
               </ul>
+            </section>
+          )}
+
+          {pillar && (
+            <section aria-labelledby="pillar-h" className="card mt-10 p-6">
+              <h2 id="pillar-h" className="text-xl">Part of the guide</h2>
+              <p className="mt-2"><Link className="font-semibold text-brand underline" href={`/guides/${pillar.slug}/`}>{pillar.title}</Link></p>
+              <p className="mt-1 text-sm text-slate">{pillar.description}</p>
             </section>
           )}
 

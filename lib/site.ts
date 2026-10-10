@@ -7,6 +7,8 @@ export const SITE = {
   locale: "en_IN",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
+  ssrn: process.env.NEXT_PUBLIC_SSRN_URL || "",
+  hackerrank: process.env.NEXT_PUBLIC_HACKERRANK_URL || "",
   portfolio: process.env.NEXT_PUBLIC_PORTFOLIO_URL || "https://adithyareddy.online",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL || "",
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact/",
@@ -14,6 +16,7 @@ export const SITE = {
   gscVerification: process.env.GOOGLE_SITE_VERIFICATION || "",
   bingVerification: process.env.BING_SITE_VERIFICATION || "",
   address: { locality: "Hyderabad", region: "Telangana", country: "IN" },
+  blockAiCrawlers: process.env.BLOCK_AI_CRAWLERS === "1",
   areaServed: ["Hyderabad", "Telangana", "India"],
 } as const;
 

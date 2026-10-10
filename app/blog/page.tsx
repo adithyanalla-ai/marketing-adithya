@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { metaFromMap } from "@/lib/seo-map";
 import { getPosts } from "@/lib/blog";
 import { PageHero } from "@/components/ui/PageHero";
 import { CTABand } from "@/components/sections/CTABand";
 import { BlogListing } from "@/components/BlogListing";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Marketing Blog: Lead Gen, Meta Ads, AI | Adithya",
-  description: "Practical articles on lead generation, Meta ads, marketing analytics and LLM automation, from a Hyderabad-based marketer.",
-  path: "/blog/",
-  ogLabel: "Blog",
-});
+export const metadata: Metadata = metaFromMap("/blog/", "Blog");
 
 export default function BlogIndex() {
   return (

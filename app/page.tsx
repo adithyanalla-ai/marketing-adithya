@@ -1,12 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { metaFromMap } from "@/lib/seo-map";
 import { getPosts } from "@/lib/blog";
 import { CASE_STUDIES } from "@/content/case-studies";
 import { casePath, view } from "@/lib/case-study";
 import { Hero } from "@/components/hero/Hero";
 import { JsonLd } from "@/components/JsonLd";
-import { personLd, professionalServiceLd, websiteLd } from "@/lib/jsonld";
+import { organizationLd, personLd, professionalServiceLd, websiteLd } from "@/lib/jsonld";
 import { ToolsStrip } from "@/components/sections/ToolsStrip";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
@@ -16,17 +16,13 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CompactCard } from "@/components/ui/CompactCard";
 import { PostCard } from "@/components/PostCard";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Adithya Reddy | Growth & Performance Marketer",
-  description: "Lead generation, Meta ads, marketing analytics and LLM automation from Hyderabad, India. See services, case results and the blog.",
-  path: "/",
-});
+export const metadata: Metadata = metaFromMap("/");
 
 export default function Home() {
   const posts = getPosts().slice(0, 3);
   return (
     <>
-      <JsonLd data={[personLd(), professionalServiceLd(), websiteLd()]} />
+      <JsonLd data={[personLd(), organizationLd(), professionalServiceLd(), websiteLd()]} />
       <Hero />
       <ToolsStrip />
       <ServicesGrid />

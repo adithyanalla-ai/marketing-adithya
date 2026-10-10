@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { metaFromMap } from "@/lib/seo-map";
 import { TOOLS } from "@/content/site";
 import { PageHero } from "@/components/ui/PageHero";
 import { FeatureCard } from "@/components/ui/FeatureCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CTABand } from "@/components/sections/CTABand";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Marketing Resources and Tools | Adithya Reddy",
-  description: "A free lead cost calculator, the tools I use for marketing analytics and automation, and articles on lead generation and Meta ads.",
-  path: "/resources/",
-  ogLabel: "Resources",
-});
+export const metadata: Metadata = metaFromMap("/resources/", "Resources");
 
 const USE: Record<string, string> = {
   "Meta Ads": "Running and testing paid campaigns",

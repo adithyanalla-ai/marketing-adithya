@@ -15,12 +15,14 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   const slug = (await params).category;
   const c = find(slug);
   if (!c) return {};
-  return buildMetadata({
+  // Thin category archives (under 3 posts) stay out of the index.
+  const m = buildMetadata({
     title: `${c.name} Articles | Adithya Reddy`,
     description: `Articles in the ${c.name} category on growth marketing, lead generation and AI automation.`,
     path: `/blog/category/${slug}/`,
     ogLabel: "Category",
   });
+  return c.count >= 3 ? m : { ...m, robots: { index: false, follow: true } };
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {

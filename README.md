@@ -152,3 +152,20 @@ Tokens live in `app/globals.css`; reusable pieces are in `components/ui/` (Secti
 CompactCard, StatCard, Annotation, Pill, Deco) and `components/sections/` (CTABand, ToolsStrip, FaqSection,
 ProcessSteps, ServicesGrid, StatsStrip). All copy and figures come from `content/` (`site.ts`, `services.ts`,
 `case-studies.ts`). Case studies with `ready: false` are `noindex` and left out of the sitemap until completed.
+
+## SEO system
+
+- **Keyword map:** `content/seo/keyword-map.ts` lists every page, guide and planned post with one primary keyword,
+  secondary keywords, intent, tier and status. Static pages take their title and description from it.
+- **`npm run build && npm run seo:audit`** fails on duplicate primary keywords, pages or post files without a map entry,
+  titles over 60 characters, descriptions over 155, or pages without exactly one H1.
+- **`npm run seo:links`** fails on broken internal links and orphan pages, posts that do not link up to their pillar guide,
+  to a service page and to two related posts, and guides that do not link down to every published cluster post.
+- **Guides** live in `content/guides/*.mdx` (same frontmatter as posts, plus `service`). They are `draft: true` until you add
+  your own experience. When publishing a guide, set `draft: false` and change its map status to `live` (and `/guides/` to `live`).
+  Posts are attached to a guide through the `pillar` field in the keyword map.
+- **Tag archives and categories with fewer than three posts are `noindex`** and left out of the sitemap, to avoid thin pages.
+- **AI crawlers** (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) are allowed; set `BLOCK_AI_CRAWLERS=1` to disallow them.
+- **Extra env vars:** `NEXT_PUBLIC_SSRN_URL`, `NEXT_PUBLIC_HACKERRANK_URL` (Person `sameAs` and author box), `BLOCK_AI_CRAWLERS`.
+- **Case studies:** `content/case-studies/*` hold verified facts; `lib/case-study.ts` enforces the permission flags and
+  `npm run build` runs `scripts/check-case-studies.ts` first.

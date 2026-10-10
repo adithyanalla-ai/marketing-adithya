@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { metaFromMap } from "@/lib/seo-map";
 import { PageHero } from "@/components/ui/PageHero";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { CTABand } from "@/components/sections/CTABand";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Marketing Services | Adithya Reddy, Hyderabad",
-  description: "Lead generation, Meta ads, admissions and election marketing, analytics and LLM automation from Hyderabad. Explore all six services.",
-  path: "/services/",
-  ogLabel: "Services",
-});
+export const metadata: Metadata = metaFromMap("/services/", "Services");
 
 const FAQS = [
   { q: "Which service should I start with?", a: "It depends on where your bottleneck is. If enquiries are weak, start with Meta ads or lead generation. If you have enquiries but poor follow-up, start with the lead pipeline. A first call is the quickest way to decide." },

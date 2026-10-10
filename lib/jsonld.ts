@@ -1,8 +1,9 @@
 import { SITE, abs } from "./site";
 import type { Post, FaqItem } from "./blog";
 import { canonical } from "./seo";
+import { CASE_STUDIES } from "../content/case-studies";
 
-const sameAs = () => [SITE.linkedin, SITE.portfolio].filter(Boolean);
+const sameAs = () => [SITE.linkedin, SITE.portfolio, SITE.ssrn, SITE.hackerrank].filter(Boolean);
 
 export const personLd = () => ({
   "@context": "https://schema.org",
@@ -20,7 +21,12 @@ export const personLd = () => ({
     addressRegion: SITE.address.region,
     addressCountry: SITE.address.country,
   },
-  knowsAbout: ["Lead generation", "Meta ads", "Performance marketing", "Marketing analytics", "Power BI", "LLM automation"],
+  knowsAbout: ["Growth marketing", "Lead generation", "Meta ads", "Performance marketing", "Marketing analytics", "Power BI", "LLM automation", "LangChain", "Claude API", "Admissions marketing", "Election campaign marketing"],
+  // worksFor appears only when an employer has been made public (permission.clientNamePublic)
+  ...(() => {
+    const emp = CASE_STUDIES.find((c) => c.kind === "employer" && c.permission.clientNamePublic);
+    return emp ? { worksFor: { "@type": "Organization", name: emp.clientName } } : {};
+  })(),
   sameAs: sameAs(),
 });
 
@@ -40,12 +46,25 @@ export const professionalServiceLd = () => ({
     addressRegion: SITE.address.region,
     addressCountry: SITE.address.country,
   },
+  serviceType: ["Growth marketing consulting", "AI lead generation", "Meta ads and performance marketing", "Marketing analytics and Power BI", "LLM reporting automation", "Admissions marketing", "Election campaign marketing"],
   areaServed: [
     { "@type": "City", name: "Hyderabad" },
     { "@type": "AdministrativeArea", name: "Telangana" },
     { "@type": "Country", name: "India" },
   ],
   ...(SITE.email ? { email: SITE.email } : {}),
+  sameAs: sameAs(),
+});
+
+/** Ties marketing.adithyareddy.online to the portfolio at adithyareddy.online. */
+export const organizationLd = () => ({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE.url}/#org`,
+  name: "Adithya Reddy Marketing",
+  url: abs("/"),
+  logo: abs("/brand/logo-full-640.webp"),
+  founder: { "@id": `${SITE.url}/#person` },
   sameAs: sameAs(),
 });
 
@@ -75,14 +94,14 @@ export const breadcrumbLd = (items: { name: string; path: string }[]) => ({
   })),
 });
 
-export const blogPostingLd = (p: Post) => ({
+export const blogPostingLd = (p: Post, section: "blog" | "guides" = "blog") => ({
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: p.title,
   description: p.description,
   datePublished: p.date,
   dateModified: p.updated,
-  mainEntityOfPage: canonical(`/blog/${p.slug}`),
+  mainEntityOfPage: canonical(`/${section}/${p.slug}`),
   image: [abs(`/og/?title=${encodeURIComponent(p.title)}&label=Blog`)],
   author: { "@type": "Person", name: p.author, url: abs("/about/") },
   publisher: { "@id": `${SITE.url}/#person` },
