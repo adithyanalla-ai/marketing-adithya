@@ -13,7 +13,7 @@ export const metadata: Metadata = buildMetadata({
 export default function Contact() {
   const external = SITE.bookingUrl.startsWith("http");
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
+    <div className="mx-auto max-w-3xl px-6 py-12">
       <Breadcrumbs items={[{ name: "Contact", path: "/contact/" }]} />
       <h1 className="mt-6 text-4xl font-semibold">Contact</h1>
       <p className="mt-4 text-muted">Tell me what you are trying to achieve and where your numbers are today. I am based in Hyderabad and work with teams across India.</p>

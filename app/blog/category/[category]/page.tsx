@@ -27,7 +27,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   const c = find(slug);
   if (!c) notFound();
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
+    <div className="mx-auto max-w-[1200px] px-6 py-12">
       <Breadcrumbs items={[{ name: "Blog", path: "/blog/" }, { name: c.name, path: `/blog/category/${slug}/` }]} />
       <h1 className="mt-6 text-4xl font-semibold">{c.name}</h1>
       <div className="mt-8"><BlogListing posts={postsInCategory(slug)} page={1} base={`/blog/category/${slug}`} activeCategory={slug} /></div>

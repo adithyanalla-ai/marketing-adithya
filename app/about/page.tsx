@@ -14,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function About() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
+    <div className="mx-auto max-w-3xl px-6 py-12">
       <JsonLd data={personLd()} />
       <Breadcrumbs items={[{ name: "About", path: "/about/" }]} />
       <h1 className="mt-6 text-4xl font-semibold">About Adithya Reddy</h1>

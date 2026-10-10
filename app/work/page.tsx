@@ -14,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
 export default function Work() {
   const items = SERVICES.flatMap((s) => s.proof.map((p) => ({ ...p, service: s })));
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12">
+    <div className="mx-auto max-w-4xl px-6 py-12">
       <Breadcrumbs items={[{ name: "Work", path: "/work/" }]} />
       <h1 className="mt-6 text-4xl font-semibold">Case studies and results</h1>
       <p className="mt-4 text-muted">Outcomes from my marketing work. More detailed write-ups are published on the blog.</p>

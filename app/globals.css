@@ -3,27 +3,71 @@
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
-  --color-ink: #0f172a;
-  --color-paper: #fbfaf6;
-  --color-muted: #475569;
-  --color-line: #e5e1d6;
-  --color-accent: #b4360c;
-  --color-accent-soft: #fdeee6;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand: #1d5cff;
+  --color-brand-dark: #1448d6;
+  --color-ink: #0b1630;
+  --color-slate: #5b6785;
+  --color-success: #16a34a;
+  --color-chip-orange: #f59e0b;
+  --color-chip-teal: #14b8a6;
+  --color-chip-violet: #6366f1;
+  --color-card-line: #e6ecf8;
+
+  /* Aliases used by pages built before the redesign */
+  --color-accent: #1d5cff;
+  --color-accent-soft: #eaf2ff;
+  --color-muted: #5b6785;
+  --color-line: #e6ecf8;
+  --color-paper: #f7faff;
+
+  --shadow-card: 0 10px 30px rgba(29, 92, 255, 0.08), 0 2px 6px rgba(11, 22, 48, 0.04);
+  --shadow-card-hover: 0 16px 40px rgba(29, 92, 255, 0.14), 0 3px 8px rgba(11, 22, 48, 0.05);
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
-body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); }
-h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
-a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+body {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  background-color: #f7faff;
+  background-image:
+    radial-gradient(60rem 38rem at 88% -6%, rgba(29, 92, 255, 0.13), transparent 62%),
+    radial-gradient(42rem 30rem at -6% 14%, rgba(20, 184, 166, 0.08), transparent 60%),
+    linear-gradient(180deg, #f7faff 0%, #eaf2ff 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--color-brand); outline-offset: 2px; }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; padding: .75rem 1.4rem; font-weight: 600; min-height: 44px; }
-.btn-primary { background: var(--color-accent); color: #fff; }
-.btn-primary:hover { background: #8f2a09; }
-.btn-ghost { border: 1px solid var(--color-ink); }
-.btn-ghost:hover { background: var(--color-ink); color: #fff; }
+@layer components {
+.container-x { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 24px; }
 
-.prose { --tw-prose-body: #1e293b; --tw-prose-links: var(--color-accent); max-width: 70ch; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 12px; padding: .8rem 1.35rem; font-weight: 700; min-height: 48px; transition: background-color .15s, box-shadow .15s, transform .15s, color .15s; }
+.btn-primary { background: var(--color-brand); color: #fff; box-shadow: 0 8px 20px rgba(29, 92, 255, 0.28); }
+.btn-primary:hover { background: var(--color-brand-dark); transform: translateY(-1px); }
+.btn-ghost { background: #fff; border: 1px solid #cfd9ef; color: var(--color-ink); }
+.btn-ghost:hover { border-color: var(--color-brand); color: var(--color-brand); transform: translateY(-1px); }
+
+.card { background: #fff; border: 1px solid var(--color-card-line); border-radius: 18px; box-shadow: var(--shadow-card); transition: transform .2s, box-shadow .2s; }
+.card-lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-hover); }
+
+.dot-grid {
+  background-image: radial-gradient(rgba(29, 92, 255, 0.28) 1.2px, transparent 1.4px);
+  background-size: 16px 16px;
+}
+}
+
+.prose { --tw-prose-body: #26324d; --tw-prose-links: var(--color-brand); max-width: 70ch; }
 .prose a { text-underline-offset: 3px; }
-.prose h2, .prose h3 { font-family: var(--font-display); }
-.prose pre { background: #0f172a; color: #e2e8f0; }
+.prose pre { background: #0b1630; color: #e2e8f0; }
+
+/* Hero swoosh draws in with CSS so the H1 stays server-rendered and visible immediately */
+.swoosh path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 0.9s 0.35s ease-out forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .swoosh path { animation: none; stroke-dashoffset: 0; }
+  .btn, .card { transition: none; }
+}

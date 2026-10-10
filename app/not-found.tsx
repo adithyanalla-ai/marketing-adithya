@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: { absolute: "Page not found | Adithya
 
 export default function NotFound() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-24">
+    <div className="mx-auto max-w-3xl px-6 py-24">
       <p className="text-sm font-semibold uppercase tracking-wide text-accent">Error 404</p>
       <h1 className="mt-2 text-4xl font-semibold">This page has wandered off</h1>
       <p className="mt-4 text-muted">The link may be old or mistyped. Try one of these instead:</p>

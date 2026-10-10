@@ -35,7 +35,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     areaServed: ["Hyderabad", "Telangana", "India"],
   };
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12">
+    <div className="mx-auto max-w-4xl px-6 py-12">
       <JsonLd data={[service, faqLd(s.faqs)]} />
       <Breadcrumbs items={[{ name: "Services", path: "/#services" }, { name: s.name, path: `/services/${s.slug}/` }]} />
       <article>

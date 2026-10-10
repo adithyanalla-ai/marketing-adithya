@@ -26,7 +26,7 @@ export default async function BlogPage({ params }: { params: Promise<{ page: str
   const posts = getPosts();
   if (!Number.isInteger(n) || n < 2 || n > Math.ceil(posts.length / PAGE_SIZE)) notFound();
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
+    <div className="mx-auto max-w-[1200px] px-6 py-12">
       <Breadcrumbs items={[{ name: "Blog", path: "/blog/" }, { name: `Page ${n}`, path: `/blog/page/${n}/` }]} />
       <h1 className="mt-6 text-4xl font-semibold">Marketing blog, page {n}</h1>
       <div className="mt-8"><BlogListing posts={posts} page={n} base="/blog" /></div>

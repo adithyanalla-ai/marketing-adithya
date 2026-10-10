@@ -2,12 +2,12 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
-import { Header } from "@/components/Header";
+import { Navbar } from "@/components/nav/Navbar";
 import { Footer } from "@/components/Footer";
 import { SITE } from "@/lib/site";
 
 const inter = localFont({ src: "./fonts/inter.woff2", variable: "--font-inter", display: "optional", weight: "100 900", preload: true });
-const fraunces = localFont({ src: "./fonts/fraunces.woff2", variable: "--font-fraunces", display: "optional", weight: "100 900", preload: true });
+const jakarta = localFont({ src: "./fonts/jakarta.woff2", variable: "--font-jakarta", display: "optional", weight: "100 900", preload: true });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -24,14 +24,14 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600; // ISR: static pages refresh at most hourly after a redeploy-free content change
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#fbfaf6" };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#F7FAFF" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="en-IN" className={`${inter.variable} ${jakarta.variable}`}>
       <body className="antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:p-3">Skip to content</a>
-        <Header />
+        <Navbar />
         <main id="main">{children}</main>
         <Footer />
         {SITE.ga4 && (

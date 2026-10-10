@@ -29,7 +29,7 @@ export function NewsletterForm() {
       <label htmlFor="nl-email" className="sr-only">Email address</label>
       <input
         id="nl-email" name="email" type="email" required placeholder="you@company.com" autoComplete="email"
-        className="min-h-11 flex-1 rounded-full border border-line bg-white px-4"
+        className="min-h-11 flex-1 rounded-full border border-line bg-white px-6"
       />
       <button type="submit" disabled={state === "busy"} className="btn btn-primary">Subscribe</button>
       <p role="status" className="text-sm sm:basis-full">{state !== "idle" && state !== "busy" ? msg : ""}</p>

@@ -55,7 +55,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const url = canonical(`/blog/${post.slug}/`);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
+    <div className="mx-auto max-w-[1200px] px-6 py-12">
       <JsonLd data={[blogPostingLd(post), ...(faq.length ? [faqLd(faq)] : [])]} />
       <Breadcrumbs items={[{ name: "Blog", path: "/blog/" }, { name: post.category, path: `/blog/category/${slugify(post.category)}/` }, { name: post.title, path: `/blog/${post.slug}/` }]} />
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_280px]">

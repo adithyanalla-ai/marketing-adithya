@@ -26,7 +26,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
   const t = find(slug);
   if (!t) notFound();
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
+    <div className="mx-auto max-w-[1200px] px-6 py-12">
       <Breadcrumbs items={[{ name: "Blog", path: "/blog/" }, { name: `Tag: ${t.name}`, path: `/blog/tag/${slug}/` }]} />
       <h1 className="mt-6 text-4xl font-semibold">Tagged: {t.name}</h1>
       <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{postsWithTag(slug).map((p) => <PostCard key={p.slug} post={p} />)}</div>

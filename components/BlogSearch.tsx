@@ -23,7 +23,7 @@ export function BlogSearch({ items }: { items: Item[] }) {
       <label htmlFor="blog-search" className="sr-only">Search articles</label>
       <input
         id="blog-search" type="search" value={q} onChange={(e) => setQ(e.target.value)}
-        placeholder="Search articles" className="min-h-11 w-full rounded-full border border-line bg-white px-4"
+        placeholder="Search articles" className="min-h-11 w-full rounded-full border border-line bg-white px-6"
       />
       {q.trim().length >= 2 && (
         <ul className="mt-3 space-y-2 rounded-2xl border border-line bg-white p-4" aria-live="polite">
