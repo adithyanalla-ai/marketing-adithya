@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { SVGProps } from "react";
 
 type P = SVGProps<SVGSVGElement>;
@@ -24,15 +25,9 @@ export const InfinityIcon = (p: P) => <svg {...base(p)}><path d="M12 12c-2-3-3.5
 export const CameraIcon = (p: P) => <svg {...base(p)}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" /></svg>;
 export const ChatIcon = (p: P) => <svg {...base(p)}><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" /></svg>;
 
-export function LogoMark(p: P) {
-  return (
-    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" {...p}>
-      <rect width="26" height="26" rx="7" fill="#1D5CFF" />
-      <rect x="6" y="13" width="3.6" height="7" rx="1.2" fill="#fff" />
-      <rect x="11.2" y="9" width="3.6" height="11" rx="1.2" fill="#fff" />
-      <rect x="16.4" y="5.5" width="3.6" height="14.5" rx="1.2" fill="#fff" />
-    </svg>
-  );
+export function LogoMark({ size = 36 }: { size?: number }) {
+  // 508x422 source mark; decorative because the wordmark text sits beside it
+  return <Image src="/brand/logo-mark.webp" alt="" width={size} height={Math.round((size * 422) / 508)} priority className="shrink-0" />;
 }
 
 export const ChevronRightIcon = (p: P) => <svg {...base(p)}><path d="m9 6 6 6-6 6" /></svg>;

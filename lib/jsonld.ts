@@ -32,6 +32,7 @@ export const professionalServiceLd = () => ({
   url: abs("/"),
   description: SITE.description,
   image: abs("/og/?title=Adithya%20Reddy"),
+  logo: abs("/brand/logo-full-640.webp"),
   founder: { "@id": `${SITE.url}/#person` },
   address: {
     "@type": "PostalAddress",

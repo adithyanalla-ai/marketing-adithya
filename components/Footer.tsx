@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
@@ -7,7 +8,8 @@ export function Footer() {
     <footer className="mt-4 border-t border-line bg-white">
       <div className="mx-auto grid max-w-[1200px] gap-8 px-6 py-12 sm:grid-cols-3">
         <div>
-          <p className="font-display text-lg font-semibold">{SITE.name}</p>
+          <Image src="/brand/logo-full-640.webp" alt="adios.marketing logo" width={200} height={Math.round((200 * 396) / 640)} className="h-auto w-[200px]" />
+          <p className="mt-3 font-display text-lg font-semibold">{SITE.name}</p>
           <p className="mt-2 text-sm text-muted">
             Growth and performance marketing from Hyderabad, Telangana, serving businesses across India.
           </p>
