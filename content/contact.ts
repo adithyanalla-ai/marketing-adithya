@@ -1,3 +1,6 @@
+/** Formspree form endpoint. It is a public endpoint (visible in the page source), not a secret. Submissions are viewed in the Formspree dashboard. */
+export const FORMSPREE_ENDPOINT = "https://formspree.io/f/xvkzrrrl";
+
 /** Single source of truth for contact details (phone, WhatsApp, LinkedIn). Email comes from the environment. */
 const WA_TEXT = "Hi Adithya, I found your website and would like to discuss growth marketing";
 

@@ -1,76 +1,67 @@
 /**
- * Behaviour tests for the contact API with fetch mocked (nothing is sent). Usage: npm run contact:test
+ * Tests for the contact form's submit logic with fetch mocked against the Formspree endpoint. Nothing is sent.
+ * Usage: npm run contact:test
  */
-process.env.OWNER_WHATSAPP_NUMBER = "918712569303";
-process.env.META_WA_TOKEN = "test-token";
-process.env.META_WA_PHONE_NUMBER_ID = "111";
-process.env.OWNER_EMAIL = "owner@example.com";
-process.env.RESEND_API_KEY = "test-key";
+import { FORMSPREE_ENDPOINT } from "../content/contact";
+import { submitContact, type RawForm } from "../lib/contact-submit";
 
-import { POST } from "../app/api/contact/route";
-
-let waStatus = 200, mailStatus = 200;
-const calls: { url: string; body: string }[] = [];
-globalThis.fetch = (async (url: string | URL, init?: RequestInit) => {
-  const u = String(url);
-  calls.push({ url: u, body: String(init?.body ?? "") });
-  const status = u.includes("graph.facebook.com") ? waStatus : u.includes("resend.com") ? mailStatus : 500;
-  return new Response(JSON.stringify(status >= 400 ? { error: { code: 131030, message: "secret provider detail" } } : { ok: true }), { status });
+type Call = { url: string; init: RequestInit };
+let calls: Call[] = [];
+let behaviour: "ok" | "400" | "500" | "network" = "ok";
+const fetchImpl = (async (url: string | URL, init?: RequestInit) => {
+  calls.push({ url: String(url), init: init ?? {} });
+  if (behaviour === "network") throw new TypeError("Failed to fetch");
+  const status = behaviour === "ok" ? 200 : Number(behaviour);
+  return new Response(JSON.stringify(status < 400 ? { ok: true } : { errors: [{ message: "raw formspree detail" }] }), { status });
 }) as typeof fetch;
 
-const body = (o: object = {}) => ({ name: "Priya Sharma", email: "priya@example.com", company: "", budget: "Not sure yet", message: "We want more admission enquiries please.", website: "", t: Date.now() - 10_000, ...o });
-let n = 0;
-const post = (b: object, ip = `10.0.0.${++n}`) => POST(new Request("http://x/api/contact", { method: "POST", headers: { "x-forwarded-for": ip, "content-type": "application/json" }, body: JSON.stringify(b) }));
+const NOW = Date.parse("2026-10-10T10:15:00Z"); // 03:45 PM in Asia/Kolkata
+const form = (o: Partial<RawForm> = {}): RawForm => ({ name: "Priya Sharma", email: "priya@example.com", company: "", budget: "Not sure yet", message: "We want more admission enquiries please.", gotcha: "", openedAt: NOW - 10_000, ...o });
+const run = (o: Partial<RawForm> = {}) => submitContact(form(o), { fetchImpl, now: () => NOW, page: "https://marketing.adithyareddy.online/contact/" });
 
 let failed = 0;
-const expect = (name: string, ok: boolean, extra = "") => { if (!ok) failed++; console.log(`${ok ? "ok  " : "FAIL"} ${name}${extra ? ` (${extra})` : ""}`); };
-const quiet = console.error; // keep expected error logs out of the output but capture them
-let logs: string[] = [];
-console.error = (...a: unknown[]) => { logs.push(a.map((x) => (typeof x === "string" ? x : JSON.stringify(x))).join(" ")); };
+const check = (name: string, ok: boolean, extra = "") => { if (!ok) failed++; console.log(`${ok ? "ok  " : "FAIL"} ${name}${extra ? ` (${extra})` : ""}`); };
 
 (async () => {
-  calls.length = 0; waStatus = 200; mailStatus = 200;
-  let r = await post(body());
-  expect("both channels succeed -> 200", r.status === 200 && calls.length === 2);
+  calls = []; behaviour = "ok";
+  let r = await run();
+  check("res.ok -> success", r.status === "ok" && calls.length === 1);
+  const c = calls[0];
+  const body = JSON.parse(String(c.init.body));
+  check("posts to the Formspree endpoint only", c.url === FORMSPREE_ENDPOINT);
+  check("JSON headers", (c.init.headers as Record<string, string>)["Accept"] === "application/json" && (c.init.headers as Record<string, string>)["Content-Type"] === "application/json" && c.init.method === "POST");
+  check("payload fields", ["name", "email", "company", "budget_range", "message", "_subject", "page", "submitted_at"].every((k) => k in body), Object.keys(body).join(","));
+  check("no separate reply-to field", !("_replyto" in body) && !("reply_to" in body) && body.email === "priya@example.com");
+  check("subject uses the name", body._subject === "New website enquiry from Priya Sharma");
+  check("empty company reads 'Not provided'", body.company === "Not provided");
+  check("page is the sending URL", body.page === "https://marketing.adithyareddy.online/contact/");
+  check("submitted_at is DD MMM YYYY, hh:mm AM/PM (Asia/Kolkata)", body.submitted_at === "10 Oct 2026, 03:45 PM", body.submitted_at);
+  check("honeypot field is not sent", !("_gotcha" in body));
 
-  waStatus = 400; mailStatus = 200; logs = [];
-  r = await post(body());
-  expect("WhatsApp fails, email ok -> 200", r.status === 200);
-  expect("WhatsApp failure is logged", logs.some((l) => l.includes("WhatsApp notification failed")));
+  for (const [label, b] of [["400", "400"], ["500", "500"], ["network error", "network"]] as const) {
+    calls = []; behaviour = b;
+    r = await run();
+    check(`${label} -> error state, no raw text`, r.status === "error" && !JSON.stringify(r).includes("raw formspree"));
+  }
 
-  waStatus = 200; mailStatus = 500; logs = [];
-  r = await post(body());
-  expect("email fails, WhatsApp ok -> 200", r.status === 200);
+  calls = []; behaviour = "ok";
+  r = await run({ gotcha: "http://spam.example" });
+  check("honeypot filled: pretend success, nothing sent", r.status === "spam" && calls.length === 0);
+  r = await run({ openedAt: NOW - 500 });
+  check("submitted in under 2.5s: pretend success, nothing sent", r.status === "spam" && calls.length === 0);
 
-  waStatus = 400; mailStatus = 500; logs = [];
-  r = await post(body());
-  const j = await r.json();
-  expect("both fail -> 502", r.status === 502);
-  expect("lead failure logged without visitor details", logs.some((l) => l.includes("LEAD NOT DELIVERED")) && !logs.join(" ").includes("Priya") && !logs.join(" ").includes("priya@"));
-  expect("provider error never shown to visitor", !JSON.stringify(j).includes("secret provider detail") && !JSON.stringify(j).includes("131030"));
+  r = await run({ name: "A" });
+  check("short name -> validation message", r.status === "invalid" && r.errors.name === "Please enter your name." && calls.length === 0);
+  r = await run({ email: "nope" });
+  check("bad email -> validation message", r.status === "invalid" && r.errors.email === "Please enter a valid email address.");
+  r = await run({ message: "short" });
+  check("short message -> validation message", r.status === "invalid" && !!r.errors.message);
 
-  waStatus = 200; mailStatus = 200; calls.length = 0;
-  r = await post(body({ website: "http://spam.example" }));
-  expect("honeypot: silent 200, nothing sent", r.status === 200 && calls.length === 0);
-  r = await post(body({ t: Date.now() - 500 }));
-  expect("filled in under 2.5s: silent 200, nothing sent", r.status === 200 && calls.length === 0);
+  const logs: unknown[][] = [];
+  calls = [];
+  r = await submitContact(form(), { fetchImpl, now: () => NOW, dryRun: true, log: (...a) => logs.push(a), page: "x" });
+  check("dry run logs the payload and does not post", r.status === "ok" && calls.length === 0 && logs.length === 1);
 
-  r = await post(body({ email: "not-an-email" }));
-  expect("invalid email -> 400", r.status === 400);
-  r = await post(body({ message: "short" }));
-  expect("short message -> 400", r.status === 400);
-
-  const ip = "203.0.113.9";
-  const codes: number[] = [];
-  for (let i = 0; i < 6; i++) codes.push((await post(body(), ip)).status);
-  expect("rate limit: 5 allowed, 6th blocked", codes.slice(0, 5).every((c) => c === 200) && codes[5] === 429, codes.join(","));
-
-  const wa = calls.find((c) => c.url.includes("graph.facebook.com"));
-  const sent = wa ? JSON.parse(wa.body).template.components[0].parameters.map((p: { text: string }) => p.text) : [];
-  expect("WhatsApp body has 6 parameters with no newlines or tabs", sent.length === 6 && sent.every((p: string) => !/[\n\t]| {5,}/.test(p)));
-  expect("empty company becomes 'Not provided'", sent[2] === "Not provided");
-
-  console.error = quiet;
   console.log(failed ? `\n${failed} test(s) failed` : "\nAll contact tests passed");
   process.exit(failed ? 1 : 0);
 })();

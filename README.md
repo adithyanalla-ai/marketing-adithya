@@ -32,10 +32,7 @@ npm run typecheck
 | `DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD` | Trend pipeline, alternative provider | one provider needed |
 | `TRENDS_PROVIDER` | `serpapi`, `dataforseo` or `pytrends` (auto-detected from keys if unset) | optional |
 | `ANTHROPIC_API_KEY` | Brief + draft generation | for drafting |
-| `NEXT_PUBLIC_WHATSAPP_URL` | WhatsApp link on /contact/ | optional |
-| `WHATSAPP_PROVIDER`, `META_WA_TOKEN`, `META_WA_PHONE_NUMBER_ID`, `META_WA_TEMPLATE_NAME`, `META_WA_TEMPLATE_LANG`, `OWNER_WHATSAPP_NUMBER` | WhatsApp notification for contact-form enquiries (see `docs/whatsapp-setup.md`) | for WhatsApp |
-| `OWNER_EMAIL`, `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` | Full-message email backup for every enquiry | **yes** |
-| `CONTACT_DRY_RUN` | `true` prints the WhatsApp request and email instead of sending (details redacted in production) | testing |
+| `NEXT_PUBLIC_CONTACT_DRY_RUN` | Dev only: `true` logs the contact payload instead of posting it (ignored in production builds) | testing |
 | `ANTHROPIC_MODEL` | Override model (default `claude-opus-5-5`) | optional |
 
 ## Routes
@@ -172,11 +169,16 @@ ProcessSteps, ServicesGrid, StatsStrip). All copy and figures come from `content
 - **Case studies:** `content/case-studies/*` hold verified facts; `lib/case-study.ts` enforces the permission flags and
   `npm run build` runs `scripts/check-case-studies.ts` first.
 
-## Contact form delivery
+## Contact form
 
-`app/api/contact/route.ts` validates with zod, drops spam silently (honeypot, form filled in under 2.5 seconds), rate-limits
-by IP, then sends a WhatsApp template message (`lib/notify/whatsapp.ts`) and an email with the full message
-(`lib/notify/email.ts`) in parallel. The visitor sees success if either went out. If both fail the visitor sees an
-error and the server logs `[contact] LEAD NOT DELIVERED` (without their details). `npm run contact:dry` prints the exact
-payload for a sample enquiry. Setup, the template text for Meta approval and the full env list are in `docs/whatsapp-setup.md`.
-The phone number, WhatsApp link and LinkedIn URL live in `content/contact.ts`.
+The form on `/contact/` posts directly from the browser to **Formspree** (`FORMSPREE_ENDPOINT` in `content/contact.ts`,
+currently `https://formspree.io/f/xvkzrrrl`). Formspree emails each submission to the address on the form; the field named
+`email` becomes the reply-to. View and export submissions in the Formspree dashboard (formspree.io, Forms, this form).
+The first time, Formspree asks you to confirm your email address.
+
+- **Change the endpoint:** edit `FORMSPREE_ENDPOINT` in `content/contact.ts` and redeploy. It is a public endpoint, not a secret.
+- **Spam:** the form has a hidden `_gotcha` honeypot and a too-fast-submit check, which only stop simple bots. Enable
+  Formspree's spam filtering, domain restriction and reCAPTCHA in its dashboard for real protection.
+- **Test:** `npm run contact:test` runs the submit logic against a mocked Formspree endpoint. In development, set
+  `NEXT_PUBLIC_CONTACT_DRY_RUN=true` to log the payload instead of posting.
+- The phone number, WhatsApp link and LinkedIn URL live in `content/contact.ts`.

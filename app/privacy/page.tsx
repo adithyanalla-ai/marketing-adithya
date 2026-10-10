@@ -21,18 +21,16 @@ export default function Privacy() {
           <h2>Information I collect</h2>
           <ul>
             <li><strong>Contact form:</strong> your name, email address, company (optional), budget range and the message you write.</li>
-            <li><strong>Technical data:</strong> your IP address is used briefly to limit repeated form submissions, and standard server logs are kept by the hosting provider.</li>
+            <li><strong>Technical data:</strong> standard server logs are kept by the hosting provider, and Formspree records the technical details it needs to deliver and protect the form.</li>
             <li><strong>Analytics:</strong> if Google Analytics is switched on, it records pages viewed and events such as form submissions and clicks on contact buttons.</li>
           </ul>
 
           <h2>How I use it</h2>
           <p>Your form details are used only to reply to your enquiry. I do not sell them or use them to build advertising profiles.</p>
 
-          <h2>Notifications and who receives your details</h2>
-          <p>When you send the form, I am notified by <strong>WhatsApp</strong> message and by <strong>email</strong>, so I do not miss your enquiry. That means your details pass through these services:</p>
+          <h2>Who receives your details</h2>
+          <p>When you send the contact form, your details go to <strong>Formspree</strong>, a form service that emails them to me. They are used only to reply to your enquiry. Formspree&apos;s handling of your data is described in its <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">privacy policy</a>. Other services involved:</p>
           <ul>
-            <li><strong>WhatsApp (Meta)</strong> or another WhatsApp messaging provider, which delivers the notification to me. The WhatsApp notice contains a shortened version of your message.</li>
-            <li><strong>Resend</strong>, which delivers the email containing your full message.</li>
             <li><strong>Vercel</strong>, which hosts the website.</li>
             <li><strong>Google Analytics</strong>, if enabled, for the analytics described above.</li>
           </ul>

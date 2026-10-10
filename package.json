@@ -15,7 +15,6 @@
     "prebuild": "tsx scripts/check-case-studies.ts",
     "seo:audit": "tsx scripts/seo-audit.ts",
     "seo:links": "tsx scripts/seo-links.ts",
-    "contact:dry": "tsx scripts/contact-dry-run.ts",
     "contact:test": "tsx scripts/contact-test.ts"
   },
   "dependencies": {

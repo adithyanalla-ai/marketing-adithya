@@ -14,7 +14,7 @@ export const SITE = {
   ssrn: process.env.NEXT_PUBLIC_SSRN_URL || "",
   hackerrank: process.env.NEXT_PUBLIC_HACKERRANK_URL || "",
   portfolio: process.env.NEXT_PUBLIC_PORTFOLIO_URL || "https://adithyareddy.online",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL || CONTACT.whatsappUrl,
+  whatsapp: CONTACT.whatsappUrl,
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact/",
   ga4: process.env.NEXT_PUBLIC_GA4_ID || "",
   gscVerification: process.env.GOOGLE_SITE_VERIFICATION || "",

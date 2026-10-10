@@ -5,37 +5,44 @@ import { CheckCircleIcon, ChatIcon } from "./icons";
 import { BUDGETS, CONTACT } from "@/content/contact";
 import { track } from "@/lib/analytics";
 
+
 type Errors = Record<string, string>;
 
 export function ContactForm() {
-  const started = useRef(Date.now());
+  const openedAt = useRef(Date.now());
+  const busy = useRef(false); // blocks double submits even before React re-renders
   const [state, setState] = useState<"idle" | "busy" | "ok" | "err">("idle");
   const [errors, setErrors] = useState<Errors>({});
   const [first, setFirst] = useState("");
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (busy.current) return;
     const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
-    const local: Errors = {};
-    if (f.name.trim().length < 2) local.name = "Please enter your name.";
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email)) local.email = "Please enter a valid email address.";
-    if (f.message.trim().length < 10) local.message = "Please tell me a little more (at least 10 characters).";
-    setErrors(local);
-    if (Object.keys(local).length) return;
+    busy.current = true;
     setState("busy");
     try {
-      const res = await fetch("/api/contact/", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...f, t: started.current }) });
-      const j = (await res.json().catch(() => ({}))) as { errors?: Errors };
-      if (j.errors) setErrors(j.errors);
-      if (res.ok) {
-        setFirst(f.name.trim().split(/\s+/)[0]);
-        setState("ok");
-        track("form_submit", { form: "contact" });
-      } else setState("err");
+      // Loaded on first use so zod stays out of the initial page JavaScript. A failed chunk load is handled like any other error.
+      const { submitContact, DRY_RUN } = await import("@/lib/contact-submit");
+      const result = await submitContact(
+        { name: f.name ?? "", email: f.email ?? "", company: f.company ?? "", budget: f.budget ?? "", message: f.message ?? "", gotcha: f._gotcha ?? "", openedAt: openedAt.current },
+        { dryRun: DRY_RUN },
+      );
+      if (result.status === "invalid") { setErrors(result.errors); setState("idle"); return; }
+      setErrors({});
+      if (result.status === "error") { setState("err"); return; }
+      setFirst((f.name ?? "").trim().split(/\s+/)[0]);
+      setState("ok");
+      if (result.status === "ok") track("form_submit", { form: "contact" }); // spam is shown success but never counted
     } catch {
-      setState("err"); // visitors never see provider or network details
+      setState("err");
+    } finally {
+      busy.current = false;
     }
   }
+
+  // Warm the submit module as soon as the visitor starts using the form.
+  const warm = () => { void import("@/lib/contact-submit").catch(() => {}); };
 
   if (state === "ok") {
     return (
@@ -55,7 +62,7 @@ export function ContactForm() {
   const err = (k: string) => errors[k] && <p id={`${k}-err`} role="alert" className="mt-1 text-sm font-semibold text-red-600">{errors[k]}</p>;
   const a11y = (k: string) => ({ "aria-invalid": !!errors[k], "aria-describedby": errors[k] ? `${k}-err` : undefined });
   return (
-    <form onSubmit={submit} noValidate className="card space-y-5 p-6 md:p-8" aria-label="Contact form">
+    <form onSubmit={submit} onFocusCapture={warm} noValidate className="card space-y-5 p-6 md:p-8" aria-label="Contact form">
       <div className="grid gap-5 sm:grid-cols-2">
         <div><label htmlFor="c-name" className="text-sm font-bold">Name *</label><input id="c-name" name="name" autoComplete="name" className={field} {...a11y("name")} />{err("name")}</div>
         <div><label htmlFor="c-email" className="text-sm font-bold">Email *</label><input id="c-email" name="email" type="email" autoComplete="email" className={field} {...a11y("email")} />{err("email")}</div>
@@ -68,8 +75,8 @@ export function ContactForm() {
         </div>
       </div>
       <div><label htmlFor="c-message" className="text-sm font-bold">How can I help? *</label><textarea id="c-message" name="message" rows={5} className={`${field} py-3`} {...a11y("message")} />{err("message")}</div>
-      {/* Honeypot: hidden from people, filled by bots */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
+      {/* Honeypot: off-screen (not display:none), hidden from people and assistive tech, filled by bots */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden"><label>Leave this empty<input name="_gotcha" tabIndex={-1} autoComplete="off" /></label></div>
       <button type="submit" disabled={state === "busy"} aria-busy={state === "busy"} className="btn btn-primary w-full disabled:opacity-70 sm:w-auto">{state === "busy" ? "Sending…" : "Send message"}</button>
       {state === "err" && (
         <p role="alert" className="text-sm font-semibold text-red-600">
