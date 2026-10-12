@@ -38,6 +38,7 @@ export const eject: CaseStudy = {
   tools: ["Python", "SQL", "LangChain", "Claude API", "Power BI"],
   permission: { clientNamePublic: false, figuresPublic: false },
   confirmed: false,
+  updated: "2026-10-10",
   serviceSlugs: ["ai-lead-generation", "llm-reporting-automation"],
   postSlug: "building-a-segmented-scored-lead-pipeline",
   icon: "briefcase",

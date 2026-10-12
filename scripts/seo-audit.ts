@@ -64,6 +64,42 @@ for (const [url, file] of pages) {
 }
 for (const e of KEYWORD_MAP) if ((e.status === "live" || e.status === "noindex") && !pages.has(e.url)) errors.push(`Map entry ${e.url} is "${e.status}" but no built page exists`);
 
+// 4. Sitemap: every URL has a real lastmod, no changefreq/priority, no drafts or unconfirmed case studies
+import fs from "node:fs";
+import path from "node:path";
+import { CASE_STUDIES } from "../content/case-studies";
+import { casePath } from "../lib/case-study";
+import { getPosts } from "../lib/blog";
+import { canonical } from "../lib/seo";
+
+const smFile = path.join(process.cwd(), ".next", "server", "app", "sitemap.xml.body");
+if (!fs.existsSync(smFile)) errors.push("sitemap.xml was not found in the build output");
+else {
+  const xml = fs.readFileSync(smFile, "utf8");
+  if (/<changefreq>|<priority>/.test(xml)) errors.push("sitemap.xml still contains changefreq or priority");
+  const urls = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
+  const locs = new Map<string, string | undefined>();
+  for (const u of urls) {
+    const loc = /<loc>([^<]+)<\/loc>/.exec(u)?.[1] ?? "";
+    const lastmod = /<lastmod>([^<]+)<\/lastmod>/.exec(u)?.[1];
+    locs.set(loc, lastmod);
+    if (!lastmod) errors.push(`sitemap: ${loc} has no lastmod`);
+    else if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) errors.push(`sitemap: ${loc} lastmod "${lastmod}" is not YYYY-MM-DD`);
+  }
+  for (const p of getPosts()) if (locs.get(canonical(`/blog/${p.slug}/`)) !== p.updated) errors.push(`sitemap: ${p.slug} lastmod differs from its updated date (${p.updated})`);
+  for (const p of getAllPostsIncludingDrafts().filter((x) => x.draft)) if (locs.has(canonical(`/blog/${p.slug}/`))) errors.push(`sitemap lists draft post ${p.slug}`);
+  for (const g of getAllGuidesIncludingDrafts().filter((x) => x.draft)) if (locs.has(canonical(`/guides/${g.slug}/`))) errors.push(`sitemap lists draft guide ${g.slug}`);
+  for (const c of CASE_STUDIES) {
+    const listed = locs.has(canonical(casePath(c)));
+    if (listed && !c.confirmed) errors.push(`sitemap lists unconfirmed case study ${c.slug}`);
+    if (!listed && c.confirmed) errors.push(`confirmed case study ${c.slug} is missing from the sitemap`);
+    if (listed && locs.get(canonical(casePath(c))) !== c.updated) errors.push(`sitemap: case ${c.slug} lastmod differs from its updated date`);
+  }
+  console.log(`Sitemap: ${locs.size} URLs, all with lastmod.`);
+}
+const robotsFile = path.join(process.cwd(), ".next", "server", "app", "robots.txt.body");
+if (fs.existsSync(robotsFile) && /^Host:/im.test(fs.readFileSync(robotsFile, "utf8"))) errors.push("robots.txt still has a Host line");
+
 console.log(`Checked ${KEYWORD_MAP.length} map entries and ${pages.size} built pages.`);
 for (const w of warnings) console.log(`  warn ${w}`);
 if (errors.length) { console.error(`\nSEO audit FAILED (${errors.length}):`); for (const e of errors) console.error(`  x ${e}`); process.exit(1); }

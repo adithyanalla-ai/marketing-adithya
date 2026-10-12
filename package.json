@@ -12,10 +12,11 @@
     "indexnow": "tsx scripts/indexnow.ts",
     "validate:seo": "tsx scripts/validate-seo.ts",
     "check:cases": "tsx scripts/check-case-studies.ts",
-    "prebuild": "tsx scripts/check-case-studies.ts",
+    "prebuild": "tsx scripts/check-case-studies.ts && tsx scripts/lastmod.ts",
     "seo:audit": "tsx scripts/seo-audit.ts",
     "seo:links": "tsx scripts/seo-links.ts",
-    "contact:test": "tsx scripts/contact-test.ts"
+    "contact:test": "tsx scripts/contact-test.ts",
+    "lastmod": "tsx scripts/lastmod.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",

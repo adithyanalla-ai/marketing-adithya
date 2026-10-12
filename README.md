@@ -182,3 +182,12 @@ The first time, Formspree asks you to confirm your email address.
 - **Test:** `npm run contact:test` runs the submit logic against a mocked Formspree endpoint. In development, set
   `NEXT_PUBLIC_CONTACT_DRY_RUN=true` to log the payload instead of posting.
 - The phone number, WhatsApp link and LinkedIn URL live in `content/contact.ts`.
+
+## Sitemap lastmod
+
+Every sitemap URL has a real `lastmod` (no `changefreq` or `priority`, which Google ignores):
+posts, guides and case studies use the `updated` date in their content file (bump `updated` when you edit them);
+static pages use the last git commit date of the files behind them, listed in `scripts/lastmod.ts` and stored in
+`content/seo/lastmod.json`. `npm run build` refreshes that file when the full git history is available (on shallow or
+git-less builds it uses the committed copy), so commit the updated JSON after changing a page. `npm run seo:audit`
+checks the sitemap for missing or mismatched `lastmod`, drafts, unconfirmed case studies and a stray `Host:` line in robots.txt.

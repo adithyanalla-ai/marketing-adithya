@@ -32,6 +32,7 @@ export const int360: CaseStudy = {
   tools: ["Meta Ads", "Power BI", "DAX", "SQL", "Python", "Pandas"],
   permission: { clientNamePublic: false, figuresPublic: false },
   confirmed: false,
+  updated: "2026-10-10",
   serviceSlugs: ["meta-ads-performance-marketing", "marketing-analytics-power-bi"],
   postSlug: "structured-meta-ab-testing-cut-cost-per-lead",
   icon: "barchart",

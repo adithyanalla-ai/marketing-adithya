@@ -32,6 +32,8 @@ export type CaseStudy = {
   tools: string[];
   permission: { clientNamePublic: boolean; figuresPublic: boolean };
   confirmed: boolean;
+  /** YYYY-MM-DD of the last substantive edit to this case. Bump it when you change the content; it becomes the sitemap lastmod. */
+  updated: string;
   serviceSlugs: string[];
   /** Blog post that explains the method behind this case. */
   postSlug: string;

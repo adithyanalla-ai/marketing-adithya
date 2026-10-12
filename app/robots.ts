@@ -13,6 +13,5 @@ export default function robots(): MetadataRoute.Robots {
       SITE.blockAiCrawlers ? { userAgent: AI, disallow: "/" } : { userAgent: AI, allow: "/", disallow: ["/api/"] },
     ],
     sitemap: `${SITE.url}/sitemap.xml`,
-    host: SITE.url,
   };
 }

@@ -23,6 +23,7 @@ export const policeElection: CaseStudy = {
   tools: ["TODO_CONFIRM"],
   permission: { clientNamePublic: false, figuresPublic: false },
   confirmed: false,
+  updated: "2026-10-10",
   serviceSlugs: ["election-campaign-marketing"],
   postSlug: "campaign-manifesto-strategy-association-elections",
   icon: "bank",
