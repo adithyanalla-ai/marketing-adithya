@@ -12,6 +12,8 @@ export const CONTACT = {
   whatsappUrl: `https://wa.me/918712569303?text=${encodeURIComponent(WA_TEXT)}`,
   linkedinUrl: "https://www.linkedin.com/in/adithyareddy-ai",
   linkedinLabel: "linkedin.com/in/adithyareddy-ai",
+  instagramUrl: "https://www.instagram.com/adios.marketing/",
+  instagramHandle: "@adios.marketing",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "",
   responseNote: "I read every message personally and reply by email.",
 } as const;

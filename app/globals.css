@@ -74,3 +74,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 .capitalize-first::first-letter { text-transform: uppercase; }
+
+/* Instagram strip: seamless marquee (two copies of the list, shifted by exactly one copy). */
+@keyframes ig-scroll { to { transform: translateX(-50%); } }
+.ig-track { animation: ig-scroll 50s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .ig-track { animation: none; }
+  .ig-dup { display: none; }
+  .ig-viewport { overflow-x: auto; scroll-snap-type: x proximity; }
+  .ig-viewport li { scroll-snap-align: start; }
+}

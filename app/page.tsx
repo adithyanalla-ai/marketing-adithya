@@ -15,6 +15,7 @@ import { CTABand } from "@/components/sections/CTABand";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CompactCard } from "@/components/ui/CompactCard";
 import { PostCard } from "@/components/PostCard";
+import { InstagramSection } from "@/components/sections/InstagramSection";
 
 export const metadata: Metadata = metaFromMap("/");
 
@@ -39,6 +40,8 @@ export default function Home() {
         </div>
         <p className="mt-6"><Link href="/case-studies/" className="font-semibold text-brand underline">View all case studies</Link></p>
       </section>
+
+      <InstagramSection />
 
       {posts.length > 0 && (
         <section aria-labelledby="blog-h" className="container-x py-12">

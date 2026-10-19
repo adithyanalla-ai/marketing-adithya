@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
+import { CONTACT } from "@/content/contact";
 
 export function Footer() {
   return (
@@ -33,6 +34,7 @@ export function Footer() {
             <li><Link className="hover:text-accent" href="/contact/">Contact</Link></li>
             <li><a className="hover:text-accent" href={`tel:${SITE.telephone.replace(/-/g, "")}`}>{SITE.phone}</a></li>
             <li><Link className="hover:text-accent" href="/privacy/">Privacy</Link></li>
+            <li><a className="hover:text-accent" href={CONTACT.instagramUrl} target="_blank" rel="noopener">Instagram</a></li>
             <li><a className="hover:text-accent" href="/rss.xml">RSS feed</a></li>
             {SITE.linkedin && <li><a className="hover:text-accent" href={SITE.linkedin} rel="me noopener">LinkedIn profile</a></li>}
           </ul>
