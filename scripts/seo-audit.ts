@@ -62,6 +62,25 @@ for (const [url, file] of pages) {
     if (words.length && !words.some((w) => hay.includes(w))) warnings.push(`${url}: neither title nor H1 contains any word of "${entry.primaryKeyword}"`);
   }
 }
+// 3b. Cross-page and structure checks: duplicate titles/descriptions, canonical, images without alt, JSON-LD validity, OG image
+const titles = new Map<string, string>(), descs = new Map<string, string>();
+for (const [url, file] of pages) {
+  const entry = KEYWORD_MAP.find((x) => x.url === url);
+  if (entry && (entry.status === "planned" || entry.status === "draft")) continue;
+  const html = read(file);
+  const t = title(html), d = description(html);
+  if (t) { if (titles.has(t)) errors.push(`Duplicate title "${t}": ${titles.get(t)} and ${url}`); titles.set(t, url); }
+  if (d) { if (descs.has(d)) errors.push(`Duplicate description on ${descs.get(d)} and ${url}`); descs.set(d, url); }
+  const canon = /<link rel="canonical" href="([^"]+)"/.exec(html)?.[1];
+  if (!canon) errors.push(`${url}: no canonical`);
+  else if (canon !== `https://marketing.adithyareddy.online${url}` && !canon.endsWith(url)) errors.push(`${url}: canonical points elsewhere (${canon})`);
+  for (const m of html.matchAll(/<img\b[^>]*>/g)) if (!/\balt=/.test(m[0])) errors.push(`${url}: <img> without alt: ${m[0].slice(0, 80)}`);
+  for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try { JSON.parse(m[1]); } catch { errors.push(`${url}: invalid JSON-LD`); }
+  }
+  if (!/property="og:image"/.test(html)) errors.push(`${url}: no og:image`);
+  if (!/<html lang="en-IN"/.test(html)) errors.push(`${url}: html lang is not en-IN`);
+}
 for (const e of KEYWORD_MAP) if ((e.status === "live" || e.status === "noindex") && !pages.has(e.url)) errors.push(`Map entry ${e.url} is "${e.status}" but no built page exists`);
 
 // 4. Sitemap: every URL has a real lastmod, no changefreq/priority, no drafts or unconfirmed case studies

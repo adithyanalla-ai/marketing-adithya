@@ -26,7 +26,7 @@ export const TOOLS = [
 export const HERO = {
   eyebrow: "Turn enquiries into revenue",
   subtext:
-    "Lead generation, performance marketing, analytics and LLM automation that drive real revenue. Based in Hyderabad, working with clients across India.",
+    "I'm Adithya Reddy, an AI marketing consultant in Hyderabad. Lead generation, performance marketing, analytics and LLM automation that drive real revenue for clients across India.",
   trust: ["Data-driven strategy", "Results-focused execution", "Transparent reporting"],
 };
 

@@ -2,6 +2,7 @@ import { SITE, abs } from "./site";
 import type { Post, FaqItem } from "./blog";
 import { canonical } from "./seo";
 import { CASE_STUDIES } from "../content/case-studies";
+import { CONTACT } from "../content/contact";
 
 const sameAs = () => [SITE.linkedin, SITE.portfolio, SITE.ssrn, SITE.hackerrank].filter(Boolean);
 
@@ -67,7 +68,7 @@ export const organizationLd = () => ({
   url: abs("/"),
   logo: abs("/brand/logo-full-640.webp"),
   founder: { "@id": `${SITE.url}/#person` },
-  sameAs: sameAs(),
+  sameAs: [...sameAs(), CONTACT.instagramUrl],
 });
 
 export const websiteLd = () => ({
