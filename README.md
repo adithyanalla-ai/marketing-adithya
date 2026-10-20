@@ -191,3 +191,11 @@ static pages use the last git commit date of the files behind them, listed in `s
 `content/seo/lastmod.json`. `npm run build` refreshes that file when the full git history is available (on shallow or
 git-less builds it uses the committed copy), so commit the updated JSON after changing a page. `npm run seo:audit`
 checks the sitemap for missing or mismatched `lastmod`, drafts, unconfirmed case studies and a stray `Host:` line in robots.txt.
+
+## Seasonal theme (Diwali)
+
+`content/theme.ts` switches the Diwali look (warm gold accents, marigold garland, diyas, mandala, sparkles, festive bar,
+footer wish) on and off by date in India time: on from 1 Oct 2026, off after 15 Nov 2026. Pages refresh hourly (ISR), so it
+expires on its own. Force it with `NEXT_PUBLIC_THEME=diwali` or off with `NEXT_PUBLIC_THEME=default`. Edit `DIWALI.from`
+and `DIWALI.until` to change the dates, or add another festival the same way. The decorations are in `components/festive/`
+and the colour overrides at the end of `app/globals.css`. `npm run theme:test` checks the date logic.

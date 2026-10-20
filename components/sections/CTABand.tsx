@@ -15,7 +15,7 @@ type Props = {
 export function CTABand({ eyebrow = "Ready to grow?", headline = "Let's discuss a strategy for your business", text = "Tell me your goals and where your numbers are today, and we will work out what to fix first.", portfolio = false }: Props) {
   return (
     <section aria-labelledby="cta-band-h" className="container-x pb-16 pt-6">
-      <div className="relative overflow-hidden rounded-[28px] border border-[#D6E3FF] bg-gradient-to-r from-[#E6EFFF] via-[#EEF4FF] to-[#F3F7FF] px-6 py-8 md:px-10">
+      <div className="cta-band relative overflow-hidden rounded-[28px] border border-[#D6E3FF] bg-gradient-to-r from-[#E6EFFF] via-[#EEF4FF] to-[#F3F7FF] px-6 py-8 md:px-10">
         <div aria-hidden="true" className="dot-grid pointer-events-none absolute -left-4 bottom-0 h-24 w-40 opacity-40" />
         <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-brand/10 blur-2xl" />
         <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">

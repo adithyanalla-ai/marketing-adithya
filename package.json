@@ -16,7 +16,8 @@
     "seo:audit": "tsx scripts/seo-audit.ts",
     "seo:links": "tsx scripts/seo-links.ts",
     "contact:test": "tsx scripts/contact-test.ts",
-    "lastmod": "tsx scripts/lastmod.ts"
+    "lastmod": "tsx scripts/lastmod.ts",
+    "theme:test": "tsx scripts/theme-test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",

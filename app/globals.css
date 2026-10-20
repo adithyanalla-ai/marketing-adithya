@@ -84,3 +84,37 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .ig-viewport { overflow-x: auto; scroll-snap-type: x proximity; }
   .ig-viewport li { scroll-snap-align: start; }
 }
+
+/* ---------- Seasonal theme: Diwali (switched on by content/theme.ts) ---------- */
+[data-theme="diwali"] {
+  --color-card-line: #f0dfb9;
+  --color-line: #f0dfb9;
+  --color-accent-soft: #fff2d6;
+  --shadow-card: 0 10px 30px rgba(224, 160, 48, 0.16), 0 2px 6px rgba(11, 22, 48, 0.05);
+  --shadow-card-hover: 0 16px 40px rgba(224, 160, 48, 0.28), 0 3px 8px rgba(11, 22, 48, 0.06);
+}
+[data-theme="diwali"] body {
+  background-color: #fffbf2;
+  background-image:
+    radial-gradient(60rem 38rem at 88% -6%, rgba(255, 176, 32, 0.26), transparent 62%),
+    radial-gradient(42rem 30rem at -6% 14%, rgba(29, 92, 255, 0.1), transparent 60%),
+    linear-gradient(180deg, #fffbf2 0%, #fff1d6 100%);
+}
+[data-theme="diwali"] .dot-grid { background-image: radial-gradient(rgba(224, 160, 48, 0.42) 1.2px, transparent 1.4px); }
+[data-theme="diwali"] .bg-\[\#EAF2FF\] { background-color: #fff0cf; }
+[data-theme="diwali"] .bg-\[\#E3EDFF\] { background-color: #ffe9b8; }
+[data-theme="diwali"] .bg-\[\#E8EFFF\] { background-color: #ffefc9; }
+[data-theme="diwali"] .border-\[\#D6E3FF\] { border-color: #f2d58f; }
+[data-theme="diwali"] .btn-ghost { border-color: #e6c98a; }
+[data-theme="diwali"] .cta-band { background: linear-gradient(90deg, #ffe6ad 0%, #fff1cf 55%, #fff8e6 100%); border-color: #f2d58f; }
+[data-theme="diwali"] .swoosh path { stroke: #f59e0b; }
+[data-theme="diwali"] footer { border-top: 3px solid transparent; border-image: linear-gradient(90deg, #f59e0b, #ffd36b, #1d5cff, #ffd36b, #f59e0b) 1; }
+
+@keyframes twinkle { 0%, 100% { opacity: 0.15; transform: scale(0.7) rotate(0deg); } 50% { opacity: 1; transform: scale(1.15) rotate(20deg); } }
+@keyframes flicker { 0%, 100% { transform: scale(1, 1) skewX(0deg); } 30% { transform: scale(0.94, 1.06) skewX(-2deg); } 60% { transform: scale(1.04, 0.97) skewX(2deg); } }
+.sparkle { animation: twinkle 3.2s ease-in-out infinite; }
+.diya-flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .sparkle { animation: none; opacity: 0.7; transform: none; }
+  .diya-flame { animation: none; }
+}

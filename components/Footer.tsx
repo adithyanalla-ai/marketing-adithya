@@ -3,6 +3,8 @@ import Link from "next/link";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
 import { CONTACT } from "@/content/contact";
+import { Diya } from "./festive/Diya";
+import { isFestive } from "@/content/theme";
 
 export function Footer() {
   return (
@@ -40,7 +42,7 @@ export function Footer() {
           </ul>
         </nav>
       </div>
-      <p className="border-t border-line py-4 text-center text-xs text-muted">© {new Date().getFullYear()} {SITE.name}</p>
+      <p className="flex items-center justify-center gap-2 border-t border-line py-4 text-center text-xs text-muted">{isFestive() && <><Diya size={16} /><span>Shubh Deepavali!</span><span aria-hidden="true">·</span></>}<span>© {new Date().getFullYear()} {SITE.name}</span></p>
     </footer>
   );
 }

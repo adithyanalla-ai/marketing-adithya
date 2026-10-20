@@ -2,17 +2,22 @@ import { ArrowRightIcon, BoltIcon, CalendarIcon, CheckCircleIcon, PlayIcon } fro
 import { BookCallButton } from "../BookCallButton";
 import { HERO } from "@/content/site";
 import { Swoosh } from "./Swoosh";
+import { Diya } from "../festive/Diya";
+import { Sparkles } from "../festive/Sparkles";
+import { isFestive } from "@/content/theme";
 import { HeroDashboardLazy } from "./HeroDashboardLazy";
 
 /** Server component: all copy is in the initial HTML, so the H1 is the LCP element. */
 export function Hero() {
+  const festive = isFestive();
   return (
     <section className="relative overflow-hidden" aria-labelledby="hero-h1">
 
+      {festive && <Sparkles />}
       <div className="container-x relative grid items-center gap-12 pb-16 pt-8 md:pt-14 lg:grid-cols-[minmax(0,11fr)_minmax(0,12fr)] lg:gap-8 lg:pb-16">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-[#D6E3FF] bg-white px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-[0.12em] text-brand shadow-sm">
-            <BoltIcon width={14} height={14} /> {HERO.eyebrow}
+            {festive ? <Diya size={18} /> : <BoltIcon width={14} height={14} />} {HERO.eyebrow}
           </p>
           <h1 id="hero-h1" className="mt-6 text-[2.35rem] leading-[1.08] text-ink sm:text-[3.1rem] lg:text-[2.9rem] xl:text-[3.15rem]">
             AI-powered growth marketing that turns enquiries into{" "}

@@ -4,6 +4,8 @@ import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/nav/Navbar";
 import { Deco } from "@/components/ui/Deco";
+import { FestiveBar } from "@/components/festive/FestiveBar";
+import { activeTheme } from "@/content/theme";
 import { Footer } from "@/components/Footer";
 import { SITE } from "@/lib/site";
 
@@ -29,10 +31,12 @@ export const revalidate = 3600; // ISR: static pages refresh at most hourly afte
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#F7FAFF" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const theme = activeTheme(); // re-evaluated on every ISR refresh, so the Diwali look expires on its own
   return (
-    <html lang="en-IN" className={`${inter.variable} ${jakarta.variable} ${caveat.variable}`}>
+    <html lang="en-IN" data-theme={theme} className={`${inter.variable} ${jakarta.variable} ${caveat.variable}`}>
       <body className="antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:p-3">Skip to content</a>
+        {theme === "diwali" && <FestiveBar />}
         <Navbar />
         <main id="main"><Deco>{children}</Deco></main>
         <Footer />
