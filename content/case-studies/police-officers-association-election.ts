@@ -21,7 +21,7 @@ export const policeElection: CaseStudy = {
     { value: "Presidency", label: "won", scope: "2026", qualitative: "The panel also won the presidency" },
   ],
   tools: ["TODO_CONFIRM"],
-  permission: { clientNamePublic: false, figuresPublic: false },
+  permission: { clientNamePublic: true, figuresPublic: true }, // confirmed by Adithya, 2026-10-31
   confirmed: false,
   updated: "2026-10-10",
   serviceSlugs: ["election-campaign-marketing"],

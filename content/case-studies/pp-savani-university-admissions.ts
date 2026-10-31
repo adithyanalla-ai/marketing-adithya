@@ -21,7 +21,7 @@ export const ppSavani: CaseStudy = {
     { value: "350+", label: "students admitted", scope: "2024-2025", qualitative: "Students admitted across the admissions cycle" },
   ],
   tools: ["TODO_CONFIRM"],
-  permission: { clientNamePublic: false, figuresPublic: false },
+  permission: { clientNamePublic: true, figuresPublic: true }, // confirmed by Adithya, 2026-10-31
   confirmed: false,
   updated: "2026-10-10",
   serviceSlugs: ["admissions-marketing"],
