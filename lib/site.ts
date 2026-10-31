@@ -11,9 +11,10 @@ export const SITE = {
   phone: CONTACT.phoneDisplay,
   telephone: CONTACT.phoneSchema,
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || CONTACT.linkedinUrl,
-  ssrn: process.env.NEXT_PUBLIC_SSRN_URL || "",
+  ssrn: process.env.NEXT_PUBLIC_SSRN_URL || "https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=11780108",
   hackerrank: process.env.NEXT_PUBLIC_HACKERRANK_URL || "",
-  portfolio: process.env.NEXT_PUBLIC_PORTFOLIO_URL || "https://adithyareddy.online",
+  /** Main site, canonical host (www). */
+  portfolio: (process.env.NEXT_PUBLIC_PORTFOLIO_URL || "https://www.adithyareddy.online").replace(/\/$/, ""),
   whatsapp: CONTACT.whatsappUrl,
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact/",
   ga4: process.env.NEXT_PUBLIC_GA4_ID || "",

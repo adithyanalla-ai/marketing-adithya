@@ -20,11 +20,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const url = (path: string, lastModified: string) => ({ url: canonical(path), lastModified });
   const stat = (path: string) => url(path, staticLastmod(path));
 
+  // "/", "/about/" and "/hyderabad-growth-marketing-consultant/" are canonicalised to
+  // www.adithyareddy.online (see CROSS_DOMAIN_CANONICAL in lib/seo.ts), so they are not listed here.
   const entries: MetadataRoute.Sitemap = [
-    url("/", latest(staticLastmod("/"), ...posts.slice(0, 3).map((p) => p.updated))),
-    stat("/about/"),
     stat("/services/"),
-    stat("/hyderabad-growth-marketing-consultant/"),
     ...SERVICES.map((s) => stat(`/services/${s.slug}/`)),
     stat("/case-studies/"),
     ...CASE_STUDIES.filter((c) => c.confirmed).map((c) => url(casePath(c), c.updated)),

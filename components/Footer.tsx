@@ -33,6 +33,8 @@ export function Footer() {
             <li><Link className="hover:text-accent" href="/case-studies/">Case studies</Link></li>
             <li><Link className="hover:text-accent" href="/resources/">Resources</Link></li>
             <li><Link className="hover:text-accent" href="/about/">About</Link></li>
+            <li><a className="hover:text-accent" href={`${SITE.portfolio}/marketing`}>Marketing services on adithyareddy.online</a></li>
+            <li><a className="hover:text-accent" href={`${SITE.portfolio}/`}>Main site: AI engineering &amp; portfolio</a></li>
             <li><Link className="hover:text-accent" href="/contact/">Contact</Link></li>
             <li><a className="hover:text-accent" href={`tel:${SITE.telephone.replace(/-/g, "")}`}>{SITE.phone}</a></li>
             <li><Link className="hover:text-accent" href="/privacy/">Privacy</Link></li>

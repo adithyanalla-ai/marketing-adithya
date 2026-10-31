@@ -56,7 +56,7 @@ export const ABOUT = {
   /** Titles and links to be added by Adithya. */
   research: [
     { title: "Peer-reviewed machine learning paper", venue: "Peer-reviewed" },
-    { title: "Two SSRN papers", venue: "SSRN" },
+    { title: "Three SSRN papers", venue: "SSRN" },
   ],
   languages: ["English", "Telugu", "Hindi"],
 };
