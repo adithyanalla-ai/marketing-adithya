@@ -15,6 +15,8 @@ const config: NextConfig = {
   },
   async headers() {
     return [
+      // Belt and braces for the share-image endpoint (also set in app/og/route.tsx).
+      { source: "/og/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
       {
         source: "/:path*",
         headers: [

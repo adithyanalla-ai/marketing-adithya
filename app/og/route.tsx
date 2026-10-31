@@ -12,6 +12,14 @@ export async function GET(req: Request) {
         <div style={{ display: "flex", fontSize: 28, color: "#cbd5e1" }}>marketing.adithyareddy.online · Hyderabad, India</div>
       </div>
     ),
-    { width: 1200, height: 630, headers: { "Cache-Control": "public, max-age=86400, s-maxage=31536000, immutable" } },
+    {
+      width: 1200,
+      height: 630,
+      headers: {
+        "Cache-Control": "public, max-age=86400, s-maxage=31536000, immutable",
+        // Share images are for link previews, never for search results.
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    },
   );
 }
