@@ -8,7 +8,8 @@
  */
 export type ThemeId = "default" | "diwali" | "celebration";
 
-export const DIWALI = { from: "2026-10-01", until: "2026-11-15" } as const;
+// Ended early on 14 Nov 2026 (last day 13 Nov); the look is off until the Christmas window opens on 18 Dec.
+export const DIWALI = { from: "2026-10-01", until: "2026-11-13" } as const;
 
 export type Festival = { id: string; name: string; greeting: string; cta: string; from: string; until: string };
 
