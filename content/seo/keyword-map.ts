@@ -93,6 +93,7 @@ export const KEYWORD_MAP: KeywordEntry[] = [
   post("segmented-scored-lead-pipeline", "lead scoring pipeline", "lead-generation-with-ai", "live", ["lead segmentation", "lead qualification"]),
   post("meta-ads-ab-testing-cost-per-lead", "meta ads a/b testing", "meta-ads-performance-marketing", "live", ["reduce cost per lead"]),
   post("llm-automation-client-reports", "automate marketing reports with llm", "ai-marketing-automation", "live", ["langchain marketing", "claude api reporting"]),
+  post("generative-engine-optimization-india", "generative engine optimization india", "ai-marketing-automation", "live", ["geo for small business", "ai search optimisation"]),
   // ---- Posts: drafts written from case studies
   post("building-a-segmented-scored-lead-pipeline", "build a lead scoring pipeline", "lead-generation-with-ai", "draft", ["deduplicate leads", "lead data cleaning"]),
   post("structured-meta-ab-testing-cut-cost-per-lead", "meta ads ab testing method", "meta-ads-performance-marketing", "draft", ["statistical significance ads"]),

@@ -110,6 +110,31 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 [data-theme="diwali"] .swoosh path { stroke: #f59e0b; }
 [data-theme="diwali"] footer { border-top: 3px solid transparent; border-image: linear-gradient(90deg, #f59e0b, #ffd36b, #1d5cff, #ffd36b, #f59e0b) 1; }
 
+/* ---------- Seasonal theme: celebration (Christmas, New Year, Sankranti; switched on by content/theme.ts) ---------- */
+[data-theme="celebration"] {
+  --color-card-line: #e3e0f5;
+  --color-line: #e3e0f5;
+  --color-accent-soft: #f1efff;
+  --shadow-card: 0 10px 30px rgba(99, 87, 200, 0.14), 0 2px 6px rgba(11, 22, 48, 0.05);
+  --shadow-card-hover: 0 16px 40px rgba(99, 87, 200, 0.24), 0 3px 8px rgba(11, 22, 48, 0.06);
+}
+[data-theme="celebration"] body {
+  background-color: #faf9ff;
+  background-image:
+    radial-gradient(60rem 38rem at 88% -6%, rgba(244, 183, 63, 0.2), transparent 62%),
+    radial-gradient(42rem 30rem at -6% 14%, rgba(99, 87, 200, 0.12), transparent 60%),
+    linear-gradient(180deg, #faf9ff 0%, #f1efff 100%);
+}
+[data-theme="celebration"] .dot-grid { background-image: radial-gradient(rgba(99, 87, 200, 0.32) 1.2px, transparent 1.4px); }
+[data-theme="celebration"] .bg-\[\#EAF2FF\] { background-color: #f1efff; }
+[data-theme="celebration"] .bg-\[\#E3EDFF\] { background-color: #e9e6ff; }
+[data-theme="celebration"] .bg-\[\#E8EFFF\] { background-color: #eeebff; }
+[data-theme="celebration"] .border-\[\#D6E3FF\] { border-color: #d9d4f5; }
+[data-theme="celebration"] .btn-ghost { border-color: #d3cdf0; }
+[data-theme="celebration"] .cta-band { background: linear-gradient(90deg, #e9e6ff 0%, #f3f1ff 55%, #fff7e3 100%); border-color: #d9d4f5; }
+[data-theme="celebration"] .swoosh path { stroke: #f4b73f; }
+[data-theme="celebration"] footer { border-top: 3px solid transparent; border-image: linear-gradient(90deg, #6357c8, #f4b73f, #1d5cff, #f4b73f, #6357c8) 1; }
+
 @keyframes twinkle { 0%, 100% { opacity: 0.15; transform: scale(0.7) rotate(0deg); } 50% { opacity: 1; transform: scale(1.15) rotate(20deg); } }
 @keyframes flicker { 0%, 100% { transform: scale(1, 1) skewX(0deg); } 30% { transform: scale(0.94, 1.06) skewX(-2deg); } 60% { transform: scale(1.04, 0.97) skewX(2deg); } }
 .sparkle { animation: twinkle 3.2s ease-in-out infinite; }
