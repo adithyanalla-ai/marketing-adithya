@@ -16,8 +16,30 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CompactCard } from "@/components/ui/CompactCard";
 import { PostCard } from "@/components/PostCard";
 import { InstagramSection } from "@/components/sections/InstagramSection";
+import { IndustryInsights } from "@/components/sections/IndustryInsights";
+import { FaqSection } from "@/components/sections/FaqSection";
+import type { Faq } from "@/content/services";
 
 export const metadata: Metadata = metaFromMap("/");
+
+const HOME_FAQS: Faq[] = [
+  {
+    q: "How do you prove the return on AI marketing?",
+    a: "I record a baseline first: cost per lead, lead volume and how many leads become real conversations. Then I change one thing at a time, keep a written test log and report cost per lead alongside lead quality, so every improvement can be traced to a change.",
+  },
+  {
+    q: "What is generative engine optimization (GEO)?",
+    a: "GEO means making your business easy for AI assistants to understand and recommend: a plain description of what you do, consistent details across the web, structured data and clear answers to buyer questions. It builds on good SEO rather than replacing it.",
+  },
+  {
+    q: "Do you only work with businesses in Hyderabad?",
+    a: "I am based in Hyderabad and work with clients across India. Calls and reporting run online, so location is rarely a limit.",
+  },
+  {
+    q: "Will AI-written content hurt my brand?",
+    a: "Not if a person stays in charge. I use AI to draft and to speed up reporting, then check facts, figures and tone before anything goes out. Unchecked, generic AI output is the real risk.",
+  },
+];
 
 export default function Home() {
   const posts = getPosts().slice(0, 3);
@@ -29,6 +51,7 @@ export default function Home() {
       <ServicesGrid />
       <ProcessSteps />
       <StatsStrip />
+      <IndustryInsights />
 
       <section aria-labelledby="cases-h" className="container-x py-12">
         <SectionHeader eyebrow="Case studies" title="Work behind the numbers" id="cases-h" description="Selected projects across admissions, election campaigns and growth marketing." />
@@ -49,6 +72,7 @@ export default function Home() {
           <div className="mt-8 grid gap-5 md:grid-cols-3">{posts.map((p) => <PostCard key={p.slug} post={p} />)}</div>
         </section>
       )}
+      <FaqSection items={HOME_FAQS} description="Straight answers on measuring AI marketing, AI search and working together." />
       <CTABand />
     </>
   );
