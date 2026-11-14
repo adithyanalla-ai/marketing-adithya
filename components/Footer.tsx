@@ -4,7 +4,10 @@ import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
 import { CONTACT } from "@/content/contact";
 import { Diya } from "./festive/Diya";
-import { isFestive } from "@/content/theme";
+import { StarBurst } from "./festive/StarBurst";
+import { activeFestival, isCelebration, isFestive } from "@/content/theme";
+
+const footerWish = (id?: string) => (id === "christmas" ? "Merry Christmas!" : id === "new-year" ? "Happy New Year!" : id === "sankranti" ? "Happy Sankranti!" : "Season's greetings!");
 
 export function Footer() {
   return (
@@ -42,7 +45,7 @@ export function Footer() {
           </ul>
         </nav>
       </div>
-      <p className="flex items-center justify-center gap-2 border-t border-line py-4 text-center text-xs text-muted">{isFestive() && <><Diya size={16} /><span>Shubh Deepavali!</span><span aria-hidden="true">·</span></>}<span>© {new Date().getFullYear()} {SITE.name}</span></p>
+      <p className="flex items-center justify-center gap-2 border-t border-line py-4 text-center text-xs text-muted">{isFestive() && <><Diya size={16} /><span>Shubh Deepavali!</span><span aria-hidden="true">·</span></>}{isCelebration() && <><StarBurst size={14} /><span>{footerWish(activeFestival()?.id)}</span><span aria-hidden="true">·</span></>}<span>© {new Date().getFullYear()} {SITE.name}</span></p>
     </footer>
   );
 }
